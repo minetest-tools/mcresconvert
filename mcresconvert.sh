@@ -177,7 +177,7 @@ wool_colored_pink.png wool_pink.png
 wool_colored_purple.png wool_purple.png
 wool_colored_red.png wool_red.png
 wool_colored_silver.png wool_light_grey.png
-wool_colored_while.png wool_white.png
+wool_colored_white.png wool_white.png
 wool_colored_yellow.png wool_yellow.png
 RENAMES
 ) |		while read IN OUT FLAG; do
