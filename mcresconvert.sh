@@ -30,6 +30,7 @@ bed_feet_side.png beds_bed_side_bottom_r.png
 bed_feet_side.png beds_bed_side_bottom_l.png h
 bed_feet_top.png beds_bed_top_bottom.png
 bed_head_end.png beds_bed_side_top.png
+bed_head_top.png beds_bed_top_top.png
 bed_head_side.png beds_bed_side_top_r.png
 bed_head_side.png beds_bed_side_top_l.png h
 book_writable.png default_book.png
