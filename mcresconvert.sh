@@ -1,7 +1,8 @@
 #!/bin/bash
 
 for required in unzip convert composite; do
-	if !type $required > /dev/null; then
+	type $required > /dev/null
+	if [ $? -ne 0 ]; then
 		echo "Unable to find \"$required\" program, exiting"
 		exit 1
 	fi
