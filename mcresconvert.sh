@@ -170,6 +170,7 @@ stone_sword.png default_tool_stonesword.png
 stone.png default_stone.png
 stonebrick.png default_stone_brick.png
 torch_on.png default_torch.png
+torch_on.png default_torch_on_floor_animated.png
 trapdoor.png default_trapdoor_wood.png
 wheat.png farming_wheat.png
 wheat_stage_0.png farming_wheat_1.png
@@ -215,9 +216,13 @@ RENAMES
 		if [ -f "_n/grass.png" ]; then
 			convert _n/grass.png -crop 1x1+70+120 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
 			composite -compose Multiply _n/_c.png _n/grass_top.png default_grass.png
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
 
 			convert _n/grass.png -crop 1x1+16+240 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
 			composite -compose Multiply _n/_c.png _n/grass_top.png default_dry_grass.png
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
 		fi
 
 		# same for leaf colors
@@ -231,43 +236,51 @@ RENAMES
 			convert $FOLIAG -crop 1x1+70+120 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
 			composite -compose Multiply _n/_c.png _n/leaves_oak.png _n/_i.png
 			composite -compose Dst_In _n/leaves_oak.png _n/_i.png -alpha Set default_leaves.png
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
 			fi
 
 			if [ -f _n/leaves_acacia.png ]; then
 			convert $FOLIAG -crop 1x1+70+120 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
 			composite -compose Multiply _n/_c.png _n/leaves_acacia.png _n/_i.png
 			composite -compose Dst_In _n/leaves_acacia.png _n/_i.png -alpha Set default_acacia_leaves.png
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
 			fi
 
 			if [ -f _n/leaves_spruce.png ]; then
 			convert $FOLIAG -crop 1x1+70+120 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
 			composite -compose Multiply _n/_c.png _n/leaves_spruce.png _n/_i.png
 			composite -compose Dst_In _n/leaves_spruce.png _n/_i.png -alpha Set default_pine_needles.png
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
 			fi
 
 			if [ -f _n/leaves_aspen.png ]; then
 			convert $FOLIAG -crop 1x1+70+120 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
 			composite -compose Multiply _n/_c.png _n/leaves_birch.png _n/_i.png
 			composite -compose Dst_In _n/leaves_birch.png _n/_i.png -alpha Set default_aspen_leaves.png
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
 			fi
 
 			if [ -f _n/leaves_jungle.png ]; then
 			convert $FOLIAG -crop 1x1+70+120 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
 			composite -compose Multiply _n/_c.png _n/leaves_jungle.png _n/_i.png
 			composite -compose Dst_In _n/leaves_jungle.png _n/_i.png -alpha Set default_jungleleaves.png
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
 			fi
 		fi
 
 		count=`cat _n/_counter | wc -c`
 		tot=`cat _n/_tot | wc -c`
-		echo "$n" > description.txt
+		echo "$n ${PXSIZE}px [$((100 * count / tot))%]" > description.txt
 		echo "(Converted from $n with Minetest Texture and Resource Pack Converter)" >> description.txt
 		echo "   - Conversion quality: $count / $tot"
 		if [ -n "$PXSIZE" ]; then
 			echo "   - Pixel size: ${PXSIZE}px"
-			echo "Pixel size: ${PXSIZE}px" >> description.txt
 		fi
-		echo "Conversion quality: $((100 * count / tot))%" >> description.txt
 		if [ -f _z/pack.txt ]; then
 			echo "Original Description:" >> description.txt
 			cat _z/pack.txt >> description.txt
