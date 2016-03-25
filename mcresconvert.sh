@@ -68,6 +68,7 @@ bucket_water.png bucket_river_water.png
 cactus_top.png default_cactus_top.png
 cactus_side.png default_cactus_side.png
 brick.png default_clay_brick.png
+brick1.png default_brick.png
 clay_ball.png default_clay_lump.png
 clay.png default_clay.png
 coal.png default_coal_lump.png
@@ -108,6 +109,7 @@ fence_oak.png default_fence_wood.png
 fence_birch.png default_fence_aspen_wood.png
 fence_spruce.png default_fence_pine_wood.png
 fence_jungle.png default_fence_junglewood.png
+fire_layer_0.png fire_basic_flame_animated.png
 flint.png default_flint.png
 flint_and_steel.pnt fire_flint_steel.png
 flower_allium.png flowers_viola.png
@@ -131,6 +133,7 @@ grass_side_snowed.png default_snow_side.png
 gravel.png default_gravel.png
 hay_block_side.png farming_straw.png
 ice.png default_ice.png
+iron_bars.png xpanes_bar.png
 iron_axe.png default_tool_steelaxe.png
 iron_hoe.png farming_tool_steelhoe.png
 iron_pickaxe.png default_tool_steelpick.png
@@ -139,6 +142,7 @@ iron_sword.png default_tool_steelsword.png
 iron_block.png default_steel_block.png
 iron_ingot.png default_steel_ingot.png
 iron_ore.png default_mineral_iron.png
+iron_trapdoor.png doors_trapdoor_steel.png
 ladder.png default_ladder.png
 lava_flow.png default_lava_flowing_animated.png
 lava_still.png default_lava_source_animated.png
