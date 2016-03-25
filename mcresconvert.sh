@@ -22,7 +22,7 @@ convert_alphatex() {
 
 convert_file() {
 	echo "Found: $@"
-	n=`basename "$@" .zip | tr -d ' \t."()[]'`
+	n=`basename "$@" .zip | tr -d ' \t."()[]' | tr -d "'"`
 	if [ -d "$n" ]; then
 		echo "   - Already imported: $n"
 		continue
@@ -146,6 +146,8 @@ iron_trapdoor.png doors_trapdoor_steel.png
 ladder.png default_ladder.png
 lava_flow.png default_lava_flowing_animated.png
 lava_still.png default_lava_source_animated.png
+log_oak.png default_tree.png
+log_oak_top.png default_tree_top.png
 log_acacia.png default_acacia_tree.png
 log_acacia_top.png default_acacia_tree_top.png
 log_birch.png default_aspen_tree.png
@@ -201,7 +203,6 @@ wheat_stage_4.png farming_wheat_5.png
 wheat_stage_5.png farming_wheat_6.png
 wheat_stage_6.png farming_wheat_7.png
 wheat_stage_7.png farming_wheat_8.png
-wood.png default_wood.png
 wood_birch.png default_aspen_wood.png
 wood_axe.png default_tool_woodaxe.png
 wood_hoe.png farming_tool_woodhoe.png
