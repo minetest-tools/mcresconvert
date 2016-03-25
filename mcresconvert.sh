@@ -10,6 +10,16 @@ done
 
 cd ~/.minetest/textures || exit 1
 
+convert_alphatex() {
+	if [ -f _n/$2 ]; then
+		convert $1 -crop 1x1+$3 -depth 8 -resize ${4}x${4} _n/_c.png
+		composite -compose Multiply _n/_c.png _n/$2 _n/_i.png
+		composite -compose Dst_In _n/$2 _n/_i.png -alpha Set $5
+		echo -e "." >> _n/_tot
+		echo -e "." >> _n/_counter
+	fi
+}
+
 convert_file() {
 	echo "Found: $@"
 	n=`basename "$@" .zip | tr -d ' \t."()[]'`
@@ -130,7 +140,8 @@ iron_block.png default_steel_block.png
 iron_ingot.png default_steel_ingot.png
 iron_ore.png default_mineral_iron.png
 ladder.png default_ladder.png
-lava_still.png default_lava.png
+lava_flow.png default_lava_flowing_animated.png
+lava_still.png default_lava_source_animated.png
 log_acacia.png default_acacia_tree.png
 log_acacia_top.png default_acacia_tree_top.png
 log_birch.png default_aspen_tree.png
@@ -160,6 +171,7 @@ sapling_jungle.png default_junglewood_sapling.png
 sapling_spruce.png default_pine_sapling.png
 sapling_oak.png default_sapling.png
 sapling_acacia.png default_acacia_sapling.png
+seeds_wheat.png farming_wheat_seed.png
 snowball.png default_snowball.png
 stick.png default_stick.png
 stone_axe.png default_tool_stoneaxe.png
@@ -172,6 +184,10 @@ stonebrick.png default_stone_brick.png
 torch_on.png default_torch.png
 torch_on.png default_torch_on_floor_animated.png
 trapdoor.png default_trapdoor_wood.png
+water_still.png default_water_source_animated.png
+water_still.png default_river_water_source_animated.png
+water_flow.png default_water_flowing_animated.png
+water_flow.png default_river_water_flowing_animated.png
 wheat.png farming_wheat.png
 wheat_stage_0.png farming_wheat_1.png
 wheat_stage_1.png farming_wheat_2.png
@@ -223,6 +239,18 @@ RENAMES
 			composite -compose Multiply _n/_c.png _n/grass_top.png default_dry_grass.png
 			echo -e "." >> _n/_tot
 			echo -e "." >> _n/_counter
+
+			convert_alphatex _n/grass.png tallgrass4.png 70+120 ${PXSIZE} default_grass_1.png
+			convert_alphatex _n/grass.png tallgrass3.png 70+120 ${PXSIZE} default_grass_2.png
+			convert_alphatex _n/grass.png tallgrass2.png 70+120 ${PXSIZE} default_grass_3.png
+			convert_alphatex _n/grass.png tallgrass1.png 70+120 ${PXSIZE} default_grass_4.png
+			convert_alphatex _n/grass.png tallgrass.png 70+120 ${PXSIZE} default_grass_5.png
+
+			convert_alphatex _n/grass.png tallgrass4.png 16+240 ${PXSIZE} default_dry_grass_1.png
+			convert_alphatex _n/grass.png tallgrass3.png 16+240 ${PXSIZE} default_dry_grass_2.png
+			convert_alphatex _n/grass.png tallgrass2.png 16+240 ${PXSIZE} default_dry_grass_3.png
+			convert_alphatex _n/grass.png tallgrass1.png 16+240 ${PXSIZE} default_dry_grass_4.png
+			convert_alphatex _n/grass.png tallgrass.png 16+240 ${PXSIZE} default_dry_grass_5.png
 		fi
 
 		# same for leaf colors
@@ -232,45 +260,11 @@ RENAMES
 			FOLIAG=_n/foliage.png
 		fi
 		if [ -n "$FOLIAG" ]; then
-			if [ -f _n/leaves_oak.png ]; then
-			convert $FOLIAG -crop 1x1+70+120 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
-			composite -compose Multiply _n/_c.png _n/leaves_oak.png _n/_i.png
-			composite -compose Dst_In _n/leaves_oak.png _n/_i.png -alpha Set default_leaves.png
-			echo -e "." >> _n/_tot
-			echo -e "." >> _n/_counter
-			fi
-
-			if [ -f _n/leaves_acacia.png ]; then
-			convert $FOLIAG -crop 1x1+70+120 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
-			composite -compose Multiply _n/_c.png _n/leaves_acacia.png _n/_i.png
-			composite -compose Dst_In _n/leaves_acacia.png _n/_i.png -alpha Set default_acacia_leaves.png
-			echo -e "." >> _n/_tot
-			echo -e "." >> _n/_counter
-			fi
-
-			if [ -f _n/leaves_spruce.png ]; then
-			convert $FOLIAG -crop 1x1+70+120 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
-			composite -compose Multiply _n/_c.png _n/leaves_spruce.png _n/_i.png
-			composite -compose Dst_In _n/leaves_spruce.png _n/_i.png -alpha Set default_pine_needles.png
-			echo -e "." >> _n/_tot
-			echo -e "." >> _n/_counter
-			fi
-
-			if [ -f _n/leaves_aspen.png ]; then
-			convert $FOLIAG -crop 1x1+70+120 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
-			composite -compose Multiply _n/_c.png _n/leaves_birch.png _n/_i.png
-			composite -compose Dst_In _n/leaves_birch.png _n/_i.png -alpha Set default_aspen_leaves.png
-			echo -e "." >> _n/_tot
-			echo -e "." >> _n/_counter
-			fi
-
-			if [ -f _n/leaves_jungle.png ]; then
-			convert $FOLIAG -crop 1x1+70+120 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
-			composite -compose Multiply _n/_c.png _n/leaves_jungle.png _n/_i.png
-			composite -compose Dst_In _n/leaves_jungle.png _n/_i.png -alpha Set default_jungleleaves.png
-			echo -e "." >> _n/_tot
-			echo -e "." >> _n/_counter
-			fi
+			convert_alphatex $FOLIAG leaves_oak.png 70+120 ${PXSIZE} default_leaves.png
+			convert_alphatex $FOLIAG leaves_acacia.png 16+240 ${PXSIZE} default_acacia_leaves.png
+			convert_alphatex $FOLIAG leaves_spruce.png 226+240 ${PXSIZE} default_pine_needles.png
+			convert_alphatex $FOLIAG leaves_birch.png 70+120 ${PXSIZE} default_aspen_leaves.png
+			convert_alphatex $FOLIAG leaves_jungle.png 16+32 ${PXSIZE} default_jungleleaves.png
 		fi
 
 		count=`cat _n/_counter | wc -c`
