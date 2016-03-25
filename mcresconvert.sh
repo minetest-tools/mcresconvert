@@ -72,7 +72,7 @@ diamond_axe.png default_tool_diamondaxe.png
 diamond_block.png default_diamond_block.png
 diamond_hoe.png farming_diamondhoe.png
 diamond_ore.png default_mineral_diamond.png
-diamond_pickaxe.png default_tool_diamondpickaxe.png
+diamond_pickaxe.png default_tool_diamondpick.png
 diamond_shovel.png default_tool_diamondshovel.png
 diamond_sword.png default_tool_diamondsword.png
 dirt.png default_dirt.png
@@ -118,7 +118,7 @@ hay_block_side.png farming_straw.png
 ice.png default_ice.png
 iron_axe.png default_tool_steelaxe.png
 iron_hoe.png farming_tool_steelhoe.png
-iron_pickaxe.png default_tool_steelpickaxe.png
+iron_pickaxe.png default_tool_steelpick.png
 iron_shovel.png default_tool_steelshovel.png
 iron_sword.png default_tool_steelsword.png
 iron_block.png default_steel_block.png
@@ -157,7 +157,7 @@ snowball.png default_snowball.png
 stick.png default_stick.png
 stone_axe.png default_tool_stoneaxe.png
 stone_hoe.png farming_tool_stonehoe.png
-stone_pickaxe.png default_tool_stonepickaxe.png
+stone_pickaxe.png default_tool_stonepick.png
 stone_shovel.png default_tool_stoneshovel.png
 stone_sword.png default_tool_stonesword.png
 stone.png default_stone.png
@@ -177,7 +177,7 @@ wood.png default_wood.png
 wood_birch.png default_aspen_wood.png
 wood_axe.png default_tool_woodaxe.png
 wood_hoe.png farming_tool_woodhoe.png
-wood_pickaxe.png default_tool_woodpickaxe.png
+wood_pickaxe.png default_tool_woodpick.png
 wood_shovel.png default_tool_woodshovel.png
 wood_sword.png default_tool_woodsword.png
 wool_colored_black.png wool_black.png
