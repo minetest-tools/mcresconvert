@@ -1,5 +1,12 @@
 #!/bin/bash
 
+for required in unzip convert composite; do
+	if !type $required > /dev/null; then
+		echo "Unable to find \"$required\" program, exiting"
+		exit 1
+	fi
+done
+
 cd ~/.minetest/textures || exit 1
 
 convert_file() {
@@ -20,6 +27,12 @@ convert_file() {
 		mkdir _n
 		find _z -type f -name '*.png' -exec cp -n {} _n/ \;
 		chmod -R +w _n _z # seriously? we have to do this? why can't unzip strip permissions?
+
+		# try and determine px size
+		if [ -f "_n/cobblestone.png" ]; then
+			PXSIZE=`file _n/cobblestone.png |sed 's/.*, \([0-9]*\) x.*/\1/'`
+		fi
+
 		( cat <<RENAMES
 background.png menubg.png
 pack.png menulogo.png
@@ -188,11 +201,43 @@ RENAMES
 				cp "_n/$IN" "$OUT"
 			fi
 		done
+
+		# attempt to colorize grasses by color cradient
+		if [ -f "_n/grass.png" ]; then
+			convert _n/grass.png -crop 1x1+16+32 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
+			composite -compose Multiply _n/_c.png _n/grass_top.png default_grass.png
+
+			convert _n/grass.png -crop 1x1+16+240 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
+			composite -compose Multiply _n/_c.png _n/grass_top.png default_dry_grass.png
+		fi
+
+		# same for leaf colors
+		if [ -f "_n/foliag.png" ]; then
+			convert _n/foliag.png -crop 1x1+16+32 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
+			composite -compose ATop _n/_c.png _n/leaves_oak.png default_leaves.png
+
+			convert _n/foliag.png -crop 1x1+16+32 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
+			composite -compose ATop _n/_c.png _n/leaves_acacia.png default_acacia_leaves.png
+
+			convert _n/foliag.png -crop 1x1+16+32 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
+			composite -compose ATop _n/_c.png _n/leaves_spruce.png default_pine_needles.png
+
+			convert _n/foliag.png -crop 1x1+16+32 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
+			composite -compose ATop _n/_c.png _n/leaves_birch.png default_aspen_leaves.png
+
+			convert _n/foliag.png -crop 1x1+16+32 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
+			composite -compose ATop _n/_c.png _n/leaves_jungle.png default_jungleleaves.png
+		fi
+
 		count=`cat _n/_counter | wc -c`
 		tot=`cat _n/_tot | wc -c`
 		echo "$n" > description.txt
 		echo "(Converted from $n with Minetest Texture and Resource Pack Converter)" >> description.txt
 		echo "   - Conversion quality: $count / $tot"
+		if [ -n "$PXSIZE" ]; then
+			echo "   - Pixel size: ${PXSIZE}px"
+			echo "Pixel size: ${PXSIZE}px" >> description.txt
+		fi
 		echo "Conversion quality: $((100 * count / tot))%" >> description.txt
 		if [ -f _z/pack.txt ]; then
 			echo "Original Description:" >> description.txt
