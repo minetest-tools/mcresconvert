@@ -92,7 +92,12 @@ dye_powder_silver.png dye_grey.png
 dye_powder_white.png dye_white.png
 dye_powder_yellow.png dye_yellow.png
 farmland_dry.png farming_soil.png
-farmland_wet.pnt farming_soil_wet.png
+farmland_wet.png farming_soil_wet.png
+fence_acacia.png default_fence_acacia_wood.png
+fence_oak.png default_fence_wood.png
+fence_birch.png default_fence_aspen_wood.png
+fence_spruce.png default_fence_pine_wood.png
+fence_jungle.png default_fence_junglewood.png
 flint.png default_flint.png
 flint_and_steel.pnt fire_flint_steel.png
 flower_allium.png flowers_viola.png
