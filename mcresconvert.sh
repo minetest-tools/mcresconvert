@@ -205,7 +205,7 @@ RENAMES
 
 		# attempt to colorize grasses by color cradient
 		if [ -f "_n/grass.png" ]; then
-			convert _n/grass.png -crop 1x1+16+32 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
+			convert _n/grass.png -crop 1x1+70+120 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
 			composite -compose Multiply _n/_c.png _n/grass_top.png default_grass.png
 
 			convert _n/grass.png -crop 1x1+16+240 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
@@ -214,20 +214,40 @@ RENAMES
 
 		# same for leaf colors
 		if [ -f "_n/foliag.png" ]; then
-			convert _n/foliag.png -crop 1x1+16+32 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
-			composite -compose ATop _n/_c.png _n/leaves_oak.png default_leaves.png
+			FOLIAG=_n/foliag.png
+		elif [ -f "_n/foliage.png" ]; then
+			FOLIAG=_n/foliage.png
+		fi
+		if [ -n "$FOLIAG" ]; then
+			if [ -f _n/leaves_oak.png ]; then
+			convert $FOLIAG -crop 1x1+70+120 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
+			composite -compose Multiply _n/_c.png _n/leaves_oak.png _n/_i.png
+			composite -compose Dst_In _n/leaves_oak.png _n/_i.png -alpha Set default_leaves.png
+			fi
 
-			convert _n/foliag.png -crop 1x1+16+32 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
-			composite -compose ATop _n/_c.png _n/leaves_acacia.png default_acacia_leaves.png
+			if [ -f _n/leaves_acacia.png ]; then
+			convert $FOLIAG -crop 1x1+70+120 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
+			composite -compose Multiply _n/_c.png _n/leaves_acacia.png _n/_i.png
+			composite -compose Dst_In _n/leaves_acacia.png _n/_i.png -alpha Set default_acacia_leaves.png
+			fi
 
-			convert _n/foliag.png -crop 1x1+16+32 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
-			composite -compose ATop _n/_c.png _n/leaves_spruce.png default_pine_needles.png
+			if [ -f _n/leaves_spruce.png ]; then
+			convert $FOLIAG -crop 1x1+70+120 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
+			composite -compose Multiply _n/_c.png _n/leaves_spruce.png _n/_i.png
+			composite -compose Dst_In _n/leaves_spruce.png _n/_i.png -alpha Set default_pine_needles.png
+			fi
 
-			convert _n/foliag.png -crop 1x1+16+32 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
-			composite -compose ATop _n/_c.png _n/leaves_birch.png default_aspen_leaves.png
+			if [ -f _n/leaves_aspen.png ]; then
+			convert $FOLIAG -crop 1x1+70+120 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
+			composite -compose Multiply _n/_c.png _n/leaves_birch.png _n/_i.png
+			composite -compose Dst_In _n/leaves_birch.png _n/_i.png -alpha Set default_aspen_leaves.png
+			fi
 
-			convert _n/foliag.png -crop 1x1+16+32 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
-			composite -compose ATop _n/_c.png _n/leaves_jungle.png default_jungleleaves.png
+			if [ -f _n/leaves_jungle.png ]; then
+			convert $FOLIAG -crop 1x1+70+120 -depth 8 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
+			composite -compose Multiply _n/_c.png _n/leaves_jungle.png _n/_i.png
+			composite -compose Dst_In _n/leaves_jungle.png _n/_i.png -alpha Set default_jungleleaves.png
+			fi
 		fi
 
 		count=`cat _n/_counter | wc -c`
