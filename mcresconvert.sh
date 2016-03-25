@@ -144,6 +144,7 @@ planks_spruce.png default_pine_wood.png
 rail_normal.png default_rail.png
 rail_normal_turned.png default_rail_curved.png
 red_sand.png default_desert_sand.png
+reeds.png default_papyrus.png
 sand.png default_sand.png
 sandstone_top.png default_sandstone.png
 sandstone_normal.png default_sandstone_brick.png
