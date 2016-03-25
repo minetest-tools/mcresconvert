@@ -45,8 +45,6 @@ convert_file() {
 		fi
 
 		( cat <<RENAMES
-background.png menubg.png
-pack.png menulogo.png
 apple.png default_apple.png
 bed.png beds_bed.png
 bed_feet_end.png beds_bed_side_bottom.png
@@ -87,6 +85,8 @@ diamond_pickaxe.png default_tool_diamondpick.png
 diamond_shovel.png default_tool_diamondshovel.png
 diamond_sword.png default_tool_diamondsword.png
 dirt.png default_dirt.png
+door_wood.png doors_item_wood.png
+door_iron.png doors_item_steel.png
 dye_powder_black.png dye_black.png
 dye_powder_blue.png dye_blue.png
 dye_powder_brown.png dye_brown.png
@@ -270,6 +270,49 @@ RENAMES
 			convert_alphatex $FOLIAG leaves_spruce.png 226+240 ${PXSIZE} default_pine_needles.png
 			convert_alphatex $FOLIAG leaves_birch.png 70+120 ${PXSIZE} default_aspen_leaves.png
 			convert_alphatex $FOLIAG leaves_jungle.png 16+32 ${PXSIZE} default_jungleleaves.png
+		fi
+
+		# compose doors texture maps
+		if [ -f _n/door_wood_lower.png -a -f _n/door_wood_upper.png ]; then
+			convert _n/door_wood_upper.png -flop _n/_fu.png
+			convert _n/door_wood_lower.png -flop _n/_fl.png
+			montage _n/door_wood_upper.png _n/_fu.png \
+				_n/door_wood_lower.png _n/_fl.png \
+				-geometry +0+0 _n/_d.png
+			convert _n/_d.png -background none -extent $(( (PXSIZE * 2) + (3 * (PXSIZE / 8) ) ))x$((PXSIZE * 2)) _n/_d2.png
+			convert _n/_d2.png -background none \
+				\( -clone 0 -crop 2x43+15+0 \) -gravity NorthWest -geometry +32+0 -composite \
+				\( -clone 0 -crop 2x43+15+0 \) -gravity NorthWest -geometry +34+0 -composite \
+				\( -clone 0 -crop 2x43+15+0 \) -gravity NorthWest -geometry +36+0 -composite \
+				doors_door_wood.png
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
+		fi
+
+		if [ -f _n/door_iron_lower.png -a -f _n/door_iron_upper.png ]; then
+			convert _n/door_iron_upper.png -flop _n/_fu.png
+			convert _n/door_iron_lower.png -flop _n/_fl.png
+			montage _n/door_iron_upper.png _n/_fu.png \
+				_n/door_iron_lower.png _n/_fl.png \
+				-geometry +0+0 _n/_d.png
+			convert _n/_d.png -extent $(( (PXSIZE * 2) + (3 * (PXSIZE / 8) ) ))x$((PXSIZE * 2)) _n/_d2.png
+			convert _n/_d2.png \
+				\( -clone 0 -crop 2x43+15+0 \) -gravity NorthWest -geometry +32+0 -composite \
+				\( -clone 0 -crop 2x43+15+0 \) -gravity NorthWest -geometry +34+0 -composite \
+				\( -clone 0 -crop 2x43+15+0 \) -gravity NorthWest -geometry +36+0 -composite \
+				doors_door_steel.png
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
+		fi
+
+		if [ -f _n/pack.png ]; then
+			# fix aspect ratio
+			convert _n/pack.png -gravity North -resize 128x128 -background none -extent 160x148 screenshot.png
+		elif [ -f _n/grass_side.png -a -f _n/dirt.png ]; then
+			# make something up
+			montage -geometry +0+0 _n/grass_side.png _n/grass_side.png _n/grass_side.png _n/grass_side.png \
+				_n/dirt.png _n/dirt.png _n/dirt.png _n/dirt.png \
+				_n/dirt.png _n/dirt.png _n/dirt.png _n/dirt.png screenshot.png
 		fi
 
 		count=`cat _n/_counter | wc -c`
