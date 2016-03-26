@@ -304,6 +304,14 @@ RENAMES
 			convert default_junglegrass.png -background none -gravity South -extent $((PXSIZE*2))x$((PXSIZE*2)) default_junglegrass.png
 		fi
 
+		# crack
+		if [ -f "_n/destroy_stage_0.png" ]; then
+			c=( _n/destroy_stage_*.png )
+			montage -tile 1x${#c[@]} -geometry +0+0 -background none ${c[@]} crack_anylength.png
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
+		fi
+
 		# same for leaf colors
 		if [ -f "_n/foliag.png" ]; then
 			FOLIAG=_n/foliag.png
