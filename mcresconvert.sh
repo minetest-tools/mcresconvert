@@ -189,7 +189,7 @@ stone.png default_stone.png
 stonebrick.png default_stone_brick.png
 torch_on.png default_torch.png
 torch_on.png default_torch_on_floor_animated.png
-trapdoor.png default_trapdoor_wood.png
+trapdoor.png doors_trapdoor_wood.png
 water_still.png default_water_source_animated.png
 water_still.png default_river_water_source_animated.png
 water_flow.png default_water_flowing_animated.png
@@ -323,7 +323,6 @@ RENAMES
 				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+0+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(4*(PXSIZE/16))))+0 -composite \
 				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+$((PXSIZE*2-1))+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(5*(PXSIZE/16))))+0 -composite \
 				doors_door_wood.png
-			gimp doors_door_wood.png
 			echo -e "." >> _n/_tot
 			echo -e "." >> _n/_counter
 		fi
@@ -342,7 +341,6 @@ RENAMES
 				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+0+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(4*(PXSIZE/16))))+0 -composite \
 				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+$((PXSIZE*2-1))+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(5*(PXSIZE/16))))+0 -composite \
 				doors_door_steel.png
-			gimp doors_door_steel.png
 			echo -e "." >> _n/_tot
 			echo -e "." >> _n/_counter
 		fi
