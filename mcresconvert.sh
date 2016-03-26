@@ -145,7 +145,7 @@ iron_block.png default_steel_block.png
 iron_ingot.png default_steel_ingot.png
 iron_ore.png default_mineral_iron.png
 iron_trapdoor.png doors_trapdoor_steel.png
-ladder.png default_ladder.png
+ladder.png default_ladder_wood.png
 lava_flow.png default_lava_flowing_animated.png
 lava_still.png default_lava_source_animated.png
 log_oak.png default_tree.png
