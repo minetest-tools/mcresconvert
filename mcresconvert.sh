@@ -21,13 +21,13 @@ convert_alphatex() {
 }
 
 convert_file() {
-	echo "Found: $@"
 	n=`basename "$@" .zip | tr -d ' \t."()[]' | tr -d "'"`
 	if [ -d "$n" ]; then
-		echo "   - Already imported: $n"
+		echo "Skipping: $n"
 		continue
 	fi
-	echo "   - Importing as $n"
+	echo "Found: $n"
+	echo "   - File: `basename "$@"`"
 	(
 		mkdir "$n"
 		cd "$n"
