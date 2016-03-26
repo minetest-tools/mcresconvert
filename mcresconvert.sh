@@ -111,7 +111,7 @@ fence_spruce.png default_fence_pine_wood.png
 fence_jungle.png default_fence_junglewood.png
 fire_layer_0.png fire_basic_flame_animated.png
 flint.png default_flint.png
-flint_and_steel.pnt fire_flint_steel.png
+flint_and_steel.png fire_flint_steel.png
 flower_allium.png flowers_viola.png
 flower_blue_orchid.png flowers_geranium.png
 flower_dandelion.png flowers_dandelion_yellow.png
@@ -204,7 +204,6 @@ wheat_stage_4.png farming_wheat_5.png
 wheat_stage_5.png farming_wheat_6.png
 wheat_stage_6.png farming_wheat_7.png
 wheat_stage_7.png farming_wheat_8.png
-wood_birch.png default_aspen_wood.png
 wood_axe.png default_tool_woodaxe.png
 wood_hoe.png farming_tool_woodhoe.png
 wood_pickaxe.png default_tool_woodpick.png
@@ -231,6 +230,9 @@ RENAMES
 			if [ -f "_n/$IN" ]; then
 				echo -e "." >> _n/_counter
 				cp "_n/$IN" "$OUT"
+			# uncomment below 2 lines to see if any textures were not found.
+			#else
+			#	echo "+$IN $OUT $FLAG: Not Found"
 			fi
 		done
 
