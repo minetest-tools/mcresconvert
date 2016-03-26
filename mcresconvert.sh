@@ -118,7 +118,8 @@ flower_dandelion.png flowers_dandelion_yellow.png
 flower_oxeye_daisy.png flowers_dandelion_white.png
 flower_rose.png flowers_rose.png
 flower_tulip_orange.png flowers_tulip.png
-furnace_front.png default_furnace_front.png
+furnace_front_off.png default_furnace_front.png
+furnace_front_on.png default_furnace_front_active.png
 furnace_side.png default_furnace_side.png
 furnace_top.png default_furnace_bottom.png
 furnace_top.png default_furnace_top.png
