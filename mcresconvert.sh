@@ -189,7 +189,7 @@ stone.png default_stone.png
 stonebrick.png default_stone_brick.png
 torch_on.png default_torch.png
 torch_on.png default_torch_on_floor_animated.png
-trapdoor.png doors_trapdoor_wood.png
+trapdoor.png doors_trapdoor.png
 water_still.png default_water_source_animated.png
 water_still.png default_river_water_source_animated.png
 water_flow.png default_water_flowing_animated.png
