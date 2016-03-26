@@ -173,7 +173,7 @@ sand.png default_sand.png
 sandstone_top.png default_sandstone.png
 sandstone_normal.png default_sandstone_brick.png
 sapling_birch.png default_aspen_sapling.png
-sapling_jungle.png default_junglewood_sapling.png
+sapling_jungle.png default_junglesapling.png
 sapling_spruce.png default_pine_sapling.png
 sapling_oak.png default_sapling.png
 sapling_acacia.png default_acacia_sapling.png
