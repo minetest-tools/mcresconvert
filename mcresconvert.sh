@@ -145,6 +145,7 @@ iron_block.png default_steel_block.png
 iron_ingot.png default_steel_ingot.png
 iron_ore.png default_mineral_iron.png
 iron_trapdoor.png doors_trapdoor_steel.png
+iron_trapdoor.png doors_trapdoor_steel_side.png
 ladder.png default_ladder_wood.png
 lava_flow.png default_lava_flowing_animated.png
 lava_still.png default_lava_source_animated.png
@@ -194,6 +195,7 @@ stonebrick.png default_stone_brick.png
 torch_on.png default_torch.png
 torch_on.png default_torch_on_floor_animated.png
 trapdoor.png doors_trapdoor.png
+trapdoor.png doors_trapdoor_side.png
 water_still.png default_water_source_animated.png
 water_still.png default_river_water_source_animated.png
 water_flow.png default_water_flowing_animated.png
