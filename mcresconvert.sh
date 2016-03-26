@@ -292,6 +292,12 @@ RENAMES
 			fi
 			#FIXME tile this
 			convert_alphatex _n/grass.png grass_side_overlay.png 16+240 ${PXSIZE} default_dry_grass_side.png
+
+			# jungle grass - compose from tall grass 2 parts
+			convert_alphatex _n/grass.png double_plant_grass_bottom.png 16+32 ${PXSIZE} _n/_jgb.png
+			convert_alphatex _n/grass.png double_plant_grass_top.png 16+32 ${PXSIZE} _n/_jgt.png
+			montage -tile 1x2 -geometry +0+0 -background none _n/_jgt.png _n/_jgb.png default_junglegrass.png
+			convert default_junglegrass.png -background none -gravity South -extent $((PXSIZE*2))x$((PXSIZE*2)) default_junglegrass.png
 		fi
 
 		# same for leaf colors
@@ -345,6 +351,28 @@ RENAMES
 			echo -e "." >> _n/_counter
 		fi
 
+		# fences - make alternative from planks
+		if [ ! -f _n/fence_oak.png ]; then
+			convert _n/planks_oak.png \( -clone 0 -crop $((PXSIZE))x$((PXSIZE/4))+0+$(((PXSIZE/8)*3)) -rotate 90 -gravity center \) -composite default_fence_wood.png
+		fi
+
+		if [ ! -f _n/fence_acacia.png ]; then
+			convert _n/planks_acacia.png \( -clone 0 -crop $((PXSIZE))x$((PXSIZE/4))+0+$(((PXSIZE/8)*3)) -rotate 90 -gravity center \) -composite default_fence_acacia_wood.png
+		fi
+
+		if [ ! -f _n/fence_spruce.png ]; then
+			convert _n/planks_spruce.png \( -clone 0 -crop $((PXSIZE))x$((PXSIZE/4))+0+$(((PXSIZE/8)*3)) -rotate 90 -gravity center \) -composite default_fence_pine_wood.png
+		fi
+
+		if [ ! -f _n/fence_jungle.png ]; then
+			convert _n/planks_jungle.png \( -clone 0 -crop $((PXSIZE))x$((PXSIZE/4))+0+$(((PXSIZE/8)*3)) -rotate 90 -gravity center \) -composite default_fence_junglewood.png
+		fi
+
+		if [ ! -f _n/fence_birch.png ]; then
+			convert _n/planks_birch.png \( -clone 0 -crop $((PXSIZE))x$((PXSIZE/4))+0+$(((PXSIZE/8)*3)) -rotate 90 -gravity center \) -composite default_fence_aspen_wood.png
+		fi
+
+		# logo
 		if [ -f _n/pack.png ]; then
 			# fix aspect ratio
 			convert _n/pack.png -gravity North -resize 128x128 -background none -extent 160x148 screenshot.png
