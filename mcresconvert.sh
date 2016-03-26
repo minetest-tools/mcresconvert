@@ -406,6 +406,22 @@ RENAMES
 			echo -e "..." >> _n/_counter
 		fi
 
+		if [ -f _n/sun.png ]; then
+			convert _n/sun.png -colorspace HSB -separate _n/_mask.png
+			convert _n/sun.png -alpha Off _n/_mask-2.png -compose CopyOpacity -composite PNG32:sun.png
+			rm _n/_mask*
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
+		fi
+		if [ -f _n/moon_phases.png ]; then
+			S=`identify -format "%[fx:w/4]" _n/moon_phases.png`
+			convert _n/moon_phases.png -colorspace HSB -separate _n/_mask.png
+			convert _n/moon_phases.png -alpha Off _n/_mask-2.png -compose CopyOpacity -composite PNG32:moon.png
+			convert -background none moon.png -gravity NorthWest -extent ${S}x${S} moon.png
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
+		fi
+
 		# logo
 		if [ -f _n/pack.png ]; then
 			# fix aspect ratio
