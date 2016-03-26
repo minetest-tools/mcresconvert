@@ -181,6 +181,7 @@ sapling_oak.png default_sapling.png
 sapling_acacia.png default_acacia_sapling.png
 seeds_wheat.png farming_wheat_seed.png
 snowball.png default_snowball.png
+snow.png default_snow.png
 stick.png default_stick.png
 stone_axe.png default_tool_stoneaxe.png
 stone_hoe.png farming_tool_stonehoe.png
@@ -382,6 +383,23 @@ RENAMES
 
 		if [ ! -f _n/fence_birch.png ]; then
 			convert _n/planks_birch.png \( -clone 0 -crop $((PXSIZE))x$((PXSIZE/4))+0+$(((PXSIZE/8)*3)) -rotate 90 -gravity center \) -composite default_fence_aspen_wood.png
+		fi
+
+		# chest textures
+		if [ -f _n/normal.png ]; then
+			CHPX=$((PXSIZE / 16 * 14)) # chests in MC are 2/16 smaller!
+			convert _n/normal.png \
+				\( -clone 0 -crop $((CHPX))x$((CHPX))+$((CHPX))+0 \) -geometry +0+0 -composite -extent $((CHPX))x$((CHPX)) default_chest_top.png
+			convert _n/normal.png \
+				\( -clone 0 -crop $((CHPX))x$(((PXSIZE/16)*5))+$((CHPX))+$((CHPX)) \) -geometry +0+0 -composite \
+				\( -clone 0 -crop $((CHPX))x$(((PXSIZE/16)*10))+$((CHPX))+$(( (2*CHPX)+((PXSIZE/16)*5) )) \) -geometry +0+$(((PXSIZE/16)*5)) -composite \
+				-extent $((CHPX))x$((CHPX)) default_chest_front.png
+			convert _n/normal.png \
+				\( -clone 0 -crop $((CHPX))x$(((PXSIZE/16)*5))+$((2*CHPX))+$((CHPX)) \) -geometry +0+0 -composite \
+				\( -clone 0 -crop $((CHPX))x$(((PXSIZE/16)*10))+$((2*CHPX))+$(( (2*CHPX)+((PXSIZE/16)*5) )) \) -geometry +0+$(((PXSIZE/16)*5)) -composite \
+				-extent $((CHPX))x$((CHPX)) default_chest_side.png
+			echo -e "..." >> _n/_tot
+			echo -e "..." >> _n/_counter
 		fi
 
 		# logo
