@@ -160,6 +160,7 @@ log_spruce.png default_pine_tree.png
 log_spruce_top.png default_pine_tree_top.png
 mushroom_brown.png flowers_mushroom_brown.png
 mushroom_red.png flowers_mushroom_red.png
+paper.png default_paper.png
 planks_acacia.png default_acacia_wood.png
 planks_birch.png default_aspen_wood.png
 planks_jungle.png default_junglewood.png
