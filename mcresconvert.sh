@@ -266,6 +266,8 @@ RENAMES
 			else
 				convert default_grass_5.png -page +0+$(((PXSIZE / 8) * 4)) -background none -flatten default_grass_1.png
 			fi
+			#FIXME tile this
+			convert_alphatex _n/grass.png grass_side_overlay.png 70+120 ${PXSIZE} default_grass_side.png
 
 			convert_alphatex _n/grass.png tallgrass.png 16+240 ${PXSIZE} default_dry_grass_5.png
 			if [ -f tallgrass1.png ]; then
@@ -288,6 +290,8 @@ RENAMES
 			else
 				convert default_dry_grass_5.png -page +0+$(((PXSIZE / 8) * 4)) -background none -flatten default_dry_grass_1.png
 			fi
+			#FIXME tile this
+			convert_alphatex _n/grass.png grass_side_overlay.png 16+240 ${PXSIZE} default_dry_grass_side.png
 		fi
 
 		# same for leaf colors
