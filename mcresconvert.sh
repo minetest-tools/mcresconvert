@@ -310,33 +310,39 @@ RENAMES
 
 		# compose doors texture maps
 		if [ -f _n/door_wood_lower.png -a -f _n/door_wood_upper.png ]; then
-			convert _n/door_wood_upper.png -flop _n/_fu.png
-			convert _n/door_wood_lower.png -flop _n/_fl.png
-			montage _n/door_wood_upper.png _n/_fu.png \
-				_n/door_wood_lower.png _n/_fl.png \
+			convert -background none _n/door_wood_upper.png -flop _n/_fu.png
+			convert -background none _n/door_wood_lower.png -flop _n/_fl.png
+			montage -background none _n/_fu.png _n/door_wood_upper.png \
+				_n/_fl.png _n/door_wood_lower.png \
 				-geometry +0+0 _n/_d.png
 			convert _n/_d.png -background none -extent $(( (PXSIZE * 2) + (3 * (PXSIZE / 8) ) ))x$((PXSIZE * 2)) _n/_d2.png
-			convert _n/_d2.png -background none \
-				\( -clone 0 -crop 2x43+15+0 \) -gravity NorthWest -geometry +32+0 -composite \
-				\( -clone 0 -crop 2x43+15+0 \) -gravity NorthWest -geometry +34+0 -composite \
-				\( -clone 0 -crop 2x43+15+0 \) -gravity NorthWest -geometry +36+0 -composite \
+			convert _n/_d2.png \
+				\( -clone 0 -crop $((PXSIZE/8))x$((PXSIZE*2))+$((PXSIZE-1))+0 \) -gravity NorthWest -geometry +$((PXSIZE*2))+0 -composite \
+				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+0+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(PXSIZE/8)))+0 -composite \
+				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+$((PXSIZE*2-1))+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(3*(PXSIZE/16))))+0 -composite \
+				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+0+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(4*(PXSIZE/16))))+0 -composite \
+				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+$((PXSIZE*2-1))+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(5*(PXSIZE/16))))+0 -composite \
 				doors_door_wood.png
+			gimp doors_door_wood.png
 			echo -e "." >> _n/_tot
 			echo -e "." >> _n/_counter
 		fi
 
 		if [ -f _n/door_iron_lower.png -a -f _n/door_iron_upper.png ]; then
-			convert _n/door_iron_upper.png -flop _n/_fu.png
-			convert _n/door_iron_lower.png -flop _n/_fl.png
-			montage _n/door_iron_upper.png _n/_fu.png \
-				_n/door_iron_lower.png _n/_fl.png \
+			convert -background none _n/door_iron_upper.png -flop _n/_fu.png
+			convert -background none _n/door_iron_lower.png -flop _n/_fl.png
+			montage -background none _n/_fu.png _n/door_iron_upper.png \
+				_n/_fl.png _n/door_iron_lower.png \
 				-geometry +0+0 _n/_d.png
 			convert _n/_d.png -background none -extent $(( (PXSIZE * 2) + (3 * (PXSIZE / 8) ) ))x$((PXSIZE * 2)) _n/_d2.png
-			convert _n/_d2.png -background none \
-				\( -clone 0 -crop 2x43+15+0 \) -gravity NorthWest -geometry +32+0 -composite \
-				\( -clone 0 -crop 2x43+15+0 \) -gravity NorthWest -geometry +34+0 -composite \
-				\( -clone 0 -crop 2x43+15+0 \) -gravity NorthWest -geometry +36+0 -composite \
+			convert _n/_d2.png \
+				\( -clone 0 -crop $((PXSIZE/8))x$((PXSIZE*2))+$((PXSIZE-1))+0 \) -gravity NorthWest -geometry +$((PXSIZE*2))+0 -composite \
+				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+0+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(PXSIZE/8)))+0 -composite \
+				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+$((PXSIZE*2-1))+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(3*(PXSIZE/16))))+0 -composite \
+				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+0+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(4*(PXSIZE/16))))+0 -composite \
+				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+$((PXSIZE*2-1))+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(5*(PXSIZE/16))))+0 -composite \
 				doors_door_steel.png
+			gimp doors_door_steel.png
 			echo -e "." >> _n/_tot
 			echo -e "." >> _n/_counter
 		fi
