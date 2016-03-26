@@ -55,6 +55,7 @@ bed_head_end.png beds_bed_side_top.png
 bed_head_top.png beds_bed_top_top.png
 bed_head_side.png beds_bed_side_top_r.png
 bed_head_side.png beds_bed_side_top_l.png h
+boat.png boats_inventory.png
 book_writable.png default_book.png
 book_written.png default_book_written.png
 bookshelf.png default_bookshelf.png
