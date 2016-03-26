@@ -245,17 +245,49 @@ RENAMES
 			echo -e "." >> _n/_tot
 			echo -e "." >> _n/_counter
 
-			convert_alphatex _n/grass.png tallgrass4.png 70+120 ${PXSIZE} default_grass_1.png
-			convert_alphatex _n/grass.png tallgrass3.png 70+120 ${PXSIZE} default_grass_2.png
-			convert_alphatex _n/grass.png tallgrass2.png 70+120 ${PXSIZE} default_grass_3.png
-			convert_alphatex _n/grass.png tallgrass1.png 70+120 ${PXSIZE} default_grass_4.png
 			convert_alphatex _n/grass.png tallgrass.png 70+120 ${PXSIZE} default_grass_5.png
+			if [ -f tallgrass1.png ]; then
+				convert_alphatex _n/grass.png tallgrass1.png 70+120 ${PXSIZE} default_grass_4.png
+			else
+				convert default_grass_5.png -page +0+$(((PXSIZE / 8) * 1)) -background none -flatten default_grass_4.png
+			fi
+			if [ -f tallgrass2.png ]; then
+				convert_alphatex _n/grass.png tallgrass2.png 70+120 ${PXSIZE} default_grass_3.png
+			else
+				convert default_grass_5.png -page +0+$(((PXSIZE / 8) * 2)) -background none -flatten default_grass_3.png
+			fi
+			if [ -f tallgrass3.png ]; then
+				convert_alphatex _n/grass.png tallgrass3.png 70+120 ${PXSIZE} default_grass_2.png
+			else
+				convert default_grass_5.png -page +0+$(((PXSIZE / 8) * 3)) -background none -flatten default_grass_2.png
+			fi
+			if [ -f tallgrass4.png ]; then
+				convert_alphatex _n/grass.png tallgrass4.png 70+120 ${PXSIZE} default_grass_1.png
+			else
+				convert default_grass_5.png -page +0+$(((PXSIZE / 8) * 4)) -background none -flatten default_grass_1.png
+			fi
 
-			convert_alphatex _n/grass.png tallgrass4.png 16+240 ${PXSIZE} default_dry_grass_1.png
-			convert_alphatex _n/grass.png tallgrass3.png 16+240 ${PXSIZE} default_dry_grass_2.png
-			convert_alphatex _n/grass.png tallgrass2.png 16+240 ${PXSIZE} default_dry_grass_3.png
-			convert_alphatex _n/grass.png tallgrass1.png 16+240 ${PXSIZE} default_dry_grass_4.png
 			convert_alphatex _n/grass.png tallgrass.png 16+240 ${PXSIZE} default_dry_grass_5.png
+			if [ -f tallgrass1.png ]; then
+				convert_alphatex _n/grass.png tallgrass1.png 16+240 ${PXSIZE} default_dry_grass_4.png
+			else
+				convert default_dry_grass_5.png -page +0+$(((PXSIZE / 8) * 1)) -background none -flatten default_dry_grass_4.png
+			fi
+			if [ -f tallgrass2.png ]; then
+				convert_alphatex _n/grass.png tallgrass2.png 16+240 ${PXSIZE} default_dry_grass_3.png
+			else
+				convert default_dry_grass_5.png -page +0+$(((PXSIZE / 8) * 2)) -background none -flatten default_dry_grass_3.png
+			fi
+			if [ -f tallgrass3.png ]; then
+				convert_alphatex _n/grass.png tallgrass3.png 16+240 ${PXSIZE} default_dry_grass_2.png
+			else
+				convert default_dry_grass_5.png -page +0+$(((PXSIZE / 8) * 3)) -background none -flatten default_dry_grass_2.png
+			fi
+			if [ -f tallgrass4.png ]; then
+				convert_alphatex _n/grass.png tallgrass4.png 16+240 ${PXSIZE} default_dry_grass_1.png
+			else
+				convert default_dry_grass_5.png -page +0+$(((PXSIZE / 8) * 4)) -background none -flatten default_dry_grass_1.png
+			fi
 		fi
 
 		# same for leaf colors
@@ -295,8 +327,8 @@ RENAMES
 			montage _n/door_iron_upper.png _n/_fu.png \
 				_n/door_iron_lower.png _n/_fl.png \
 				-geometry +0+0 _n/_d.png
-			convert _n/_d.png -extent $(( (PXSIZE * 2) + (3 * (PXSIZE / 8) ) ))x$((PXSIZE * 2)) _n/_d2.png
-			convert _n/_d2.png \
+			convert _n/_d.png -background none -extent $(( (PXSIZE * 2) + (3 * (PXSIZE / 8) ) ))x$((PXSIZE * 2)) _n/_d2.png
+			convert _n/_d2.png -background none \
 				\( -clone 0 -crop 2x43+15+0 \) -gravity NorthWest -geometry +32+0 -composite \
 				\( -clone 0 -crop 2x43+15+0 \) -gravity NorthWest -geometry +34+0 -composite \
 				\( -clone 0 -crop 2x43+15+0 \) -gravity NorthWest -geometry +36+0 -composite \
