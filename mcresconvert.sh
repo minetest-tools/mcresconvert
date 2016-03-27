@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for required in unzip convert composite; do
+for required in unzip convert composite zenity; do
 	type $required > /dev/null
 	if [ $? -ne 0 ]; then
 		echo "Unable to find \"$required\" program, exiting"
@@ -22,14 +22,16 @@ convert_alphatex() {
 
 convert_file() {
 	n=`basename "$@" .zip | tr -d ' \t."()[]' | tr -d "'"`
-	if [ -d "$n" ]; then
-		echo "Skipping: $n"
-		continue
-	fi
 	echo "Found: $n"
 	echo "   - File: `basename "$@"`"
 	(
-		mkdir "$n"
+		if ! mkdir "$n" ; then
+			if ! zenity --question --text="A texture pack folder with name \"$n\" already exists, overwrite?" --default-cancel ; then
+				exit 0
+			fi
+			rm -rf "$n"
+			mkdir "$n"
+		fi
 		cd "$n"
 		mkdir _z
 		cd _z
@@ -449,13 +451,19 @@ RENAMES
 	)
 }
 
-if [ -z "$1" ]; then
-	echo "Automatically converting resourcepacks and texturepacks found..."
+# manually passed a file name?
+if [ -n "$1" ]; then
+	convert_file "$@"
+	exit $?
+fi
 
-	if [ ! -d ~/.minetest/textures ]; then
-		echo "Can't find Minetest texture folder!"
-		exit 1
-	fi
+choice=`zenity --list --title "Choose resource packs to convert" --column="Convert" \
+	--column="Description" --height 800 --width 800 \
+	"all" "Find Minecraft resource packs installed in your minecraft folders and convert those automatically" \
+	"other" "Choose a file to convert manually"`
+
+if [ "$choice" == "all" ]; then
+	echo "Automatically converting resourcepacks and texturepacks found..."
 
 	echo "Scanning for texture/resourcepacks..."
 	(
@@ -464,7 +472,7 @@ if [ -z "$1" ]; then
 	) | while read f; do
 		convert_file "$f"
 	done
-else
+elif [ "$choice" == "other" ]; then
 	# assume file name to zip is passed
-	convert_file "$1"
+	convert_file "`zenity --file-selection --file-filter="*.zip"`"
 fi
