@@ -426,6 +426,13 @@ RENAMES
 			echo -e "." >> _n/_counter
 		fi
 
+		# inventory torch
+		if [ -f _n/torch_on.png ]; then
+			convert _n/torch_on.png -background none -gravity North -extent ${PXSIZE}x${PXSIZE} default_torch_on_floor.png
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
+		fi
+
 		# logo
 		if [ -f _n/pack.png ]; then
 			# fix aspect ratio
