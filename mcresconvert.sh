@@ -460,7 +460,8 @@ if [ -n "$1" ]; then
 fi
 
 choice=`zenity --list --title "Choose resource packs to convert" --column="Convert" \
-	--column="Description" --height 800 --width 800 \
+	--text "Do you want to convert installed resource packs, or convert a single zip file?" \
+	--column="Description" --height 400 --width 800 \
 	"all" "Find Minecraft resource packs installed in your minecraft folders and convert those automatically" \
 	"other" "Choose a file to convert manually"`
 
