@@ -411,6 +411,7 @@ RENAMES
 		if [ -f _n/sun.png ]; then
 			convert _n/sun.png -colorspace HSB -separate _n/_mask.png
 			convert _n/sun.png -alpha Off _n/_mask-2.png -compose CopyOpacity -composite PNG32:sun.png
+			convert sun.png -bordercolor black -border 1x1 -fuzz 0% -trim sun.png
 			rm _n/_mask*
 			echo -e "." >> _n/_tot
 			echo -e "." >> _n/_counter
@@ -420,6 +421,7 @@ RENAMES
 			convert _n/moon_phases.png -colorspace HSB -separate _n/_mask.png
 			convert _n/moon_phases.png -alpha Off _n/_mask-2.png -compose CopyOpacity -composite PNG32:moon.png
 			convert -background none moon.png -gravity NorthWest -extent ${S}x${S} moon.png
+			convert moon.png -bordercolor black -border 1x1 -fuzz 0% -trim moon.png
 			echo -e "." >> _n/_tot
 			echo -e "." >> _n/_counter
 		fi
