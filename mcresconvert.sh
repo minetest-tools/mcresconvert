@@ -73,8 +73,8 @@ bucket_water.png bucket_water.png
 bucket_water.png bucket_river_water.png
 cactus_top.png default_cactus_top.png
 cactus_side.png default_cactus_side.png
-assets/minecraft/textures/items/brick.png default_clay_brick.png
-brick1.png default_brick.png
+../_z/assets/minecraft/textures/items/brick.png default_clay_brick.png
+../_z/assets/minecraft/textures/blocks/brick.png default_brick.png
 clay_ball.png default_clay_lump.png
 clay.png default_clay.png
 coal.png default_coal_lump.png
