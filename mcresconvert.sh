@@ -26,7 +26,7 @@ convert_file() {
 	echo "   - File: `basename "$@"`"
 	(
 		if ! mkdir "$n" ; then
-			if ! zenity --question --text="A texture pack folder with name \"$n\" already exists, overwrite?" --default-cancel ; then
+			if ! zenity --question --width 800 --text="A texture pack folder with name \"$n\" already exists, overwrite?" --default-cancel ; then
 				exit 0
 			fi
 			rm -rf "$n"
