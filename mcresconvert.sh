@@ -25,17 +25,22 @@ convert_file() {
 	echo "Found: $n"
 	echo "   - File: `basename "$@"`"
 	(
-		if ! mkdir "$n" ; then
+		if ! mkdir "$n" > /dev/null 2>&1 ; then
 			if ! zenity --question --width 800 --text="A texture pack folder with name \"$n\" already exists, overwrite?" --default-cancel ; then
 				exit 0
 			fi
 			rm -rf "$n"
-			mkdir "$n"
+			mkdir -p "$n"
 		fi
 		cd "$n"
 		mkdir _z
 		cd _z
 		unzip -qq "$@"
+		# beware of zip files with a random extra toplevel folder.
+		assets=`find . -name 'assets' -type 'd'`
+		if [ "$assets" != "./assets" ]; then
+			mv "$assets" assets
+		fi
 		cd ..
 		mkdir _n
 		find _z -type f -name '*.png' -exec cp -n {} _n/ \;
