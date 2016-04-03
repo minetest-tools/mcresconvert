@@ -433,6 +433,16 @@ RENAMES
 			echo -e "." >> _n/_counter
 		fi
 
+		# hotbar
+		if [ -f _n/widgets.png ]; then
+			convert _n/widgets.png -background none -gravity NorthWest -crop 24x24+0+22 gui_hotbar_selected.png
+			convert _n/widgets.png -background none -gravity NorthWest -extent 182x22 \
+				\( -clone 0 -crop 22x22+160+0 \) -geometry +140+0 -composite \
+				-gravity West -extent 162x22 gui_hotbar.png
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
+		fi
+
 		# logo
 		if [ -f _n/pack.png ]; then
 			# fix aspect ratio
