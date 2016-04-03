@@ -68,7 +68,7 @@ bucket_water.png bucket_water.png
 bucket_water.png bucket_river_water.png
 cactus_top.png default_cactus_top.png
 cactus_side.png default_cactus_side.png
-brick.png default_clay_brick.png
+assets/minecraft/textures/items/brick.png default_clay_brick.png
 brick1.png default_brick.png
 clay_ball.png default_clay_lump.png
 clay.png default_clay.png
@@ -100,7 +100,7 @@ dye_powder_gray.png dye_dark_grey.png
 dye_powder_magenta.png dye_magenta.png
 dye_powder_orange.png dye_orange.png
 dye_powder_pink.png dye_pink.png
-dye_powder_purple.png dye_purple.png
+dye_powder_purple.png dye_violet.png
 dye_powder_red.png dye_red.png
 dye_powder_silver.png dye_grey.png
 dye_powder_white.png dye_white.png
@@ -184,9 +184,11 @@ sapling_spruce.png default_pine_sapling.png
 sapling_oak.png default_sapling.png
 sapling_acacia.png default_acacia_sapling.png
 seeds_wheat.png farming_wheat_seed.png
+sign.png default_sign_wood.png
 snowball.png default_snowball.png
 snow.png default_snow.png
 stick.png default_stick.png
+string.png farming_cotton.png
 stone_axe.png default_tool_stoneaxe.png
 stone_hoe.png farming_tool_stonehoe.png
 stone_pickaxe.png default_tool_stonepick.png
@@ -194,6 +196,12 @@ stone_shovel.png default_tool_stoneshovel.png
 stone_sword.png default_tool_stonesword.png
 stone.png default_stone.png
 stonebrick.png default_stone_brick.png
+sugar.png farming_flour.png
+tnt_bottom.png tnt_bottom.png
+tnt_side.png tnt_side.png
+tnt_top.png tnt_top.png
+tnt_top.png tnt_top_burning.png
+tnt_top.png tnt_top_burning_animated.png
 torch_on.png default_torch.png
 torch_on.png default_torch_on_floor_animated.png
 trapdoor.png doors_trapdoor.png
