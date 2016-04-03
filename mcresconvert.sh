@@ -451,6 +451,14 @@ RENAMES
 			echo -e "." >> _n/_counter
 		fi
 
+		# steve? ha! This assumes 64x32 dimensions, won't work well with 1.8 skins.
+		if [ -f _n/steve.png ]; then
+			convert _n/steve.png -background none -gravity NorthWest \
+			-extent 64x32 character.png
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
+		fi
+
 		# logo
 		if [ -f _n/pack.png ]; then
 			# fix aspect ratio
