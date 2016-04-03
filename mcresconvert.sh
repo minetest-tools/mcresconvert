@@ -459,6 +459,14 @@ RENAMES
 			echo -e "." >> _n/_counter
 		fi
 
+		# attempt to make desert cobblestone
+		if [ -f _n/cobblestone.png -a -f _n/red_sand.png ]; then
+			convert _n/red_sand.png -resize 1x1 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
+			convert _n/cobblestone.png _n/_c.png -compose Overlay  -composite default_desert_cobble.png
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
+		fi
+
 		# logo
 		if [ -f _n/pack.png ]; then
 			# fix aspect ratio
