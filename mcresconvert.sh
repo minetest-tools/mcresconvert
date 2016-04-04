@@ -71,8 +71,6 @@ bucket_empty.png bucket.png
 bucket_lava.png bucket_lava.png
 bucket_water.png bucket_water.png
 bucket_water.png bucket_river_water.png
-cactus_top.png default_cactus_top.png
-cactus_side.png default_cactus_side.png
 ../_z/assets/minecraft/textures/items/brick.png default_clay_brick.png
 ../_z/assets/minecraft/textures/blocks/brick.png default_brick.png
 clay_ball.png default_clay_lump.png
@@ -478,6 +476,14 @@ RENAMES
 			convert _n/cobblestone.png _n/_c.png -compose Overlay  -composite default_desert_cobble.png
 			echo -e "." >> _n/_tot
 			echo -e "." >> _n/_counter
+		fi
+
+		# cactus needs manual cropping
+		if [ -f _n/cactus_top.png ]; then
+			convert _n/cactus_top.png -crop +$((PXSIZE/16))+$((PXSIZE/16))x$(((PXSIZE/16)*14))x$(((PXSIZE/16)*14)) -gravity center -extent $(((PXSIZE/16)*14))x$(((PXSIZE/16)*14)) default_cactus_top.png
+			convert _n/cactus_side.png -crop +$((PXSIZE/16))+$((PXSIZE/16))x$(((PXSIZE/16)*14))x$(((PXSIZE/16)*14)) -gravity center -extent $(((PXSIZE/16)*14))x$(((PXSIZE/16)*14)) default_cactus_side.png
+			echo -e ".." >> _n/_tot
+			echo -e ".." >> _n/_counter
 		fi
 
 		# logo
