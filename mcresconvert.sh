@@ -570,6 +570,7 @@ choice=`zenity --list --title "Choose resource packs to convert" --column="Conve
 	--text "Do you want to convert installed resource packs, or convert a single zip file?" \
 	--column="Description" --height 400 --width 800 \
 	"all" "Find Minecraft resource packs installed in your minecraft folders and convert those automatically" \
+	"default" "Convert the default resource pack" \
 	"other" "Choose a file to convert manually"`
 
 if [ "$choice" == "all" ]; then
@@ -585,4 +586,10 @@ if [ "$choice" == "all" ]; then
 elif [ "$choice" == "other" ]; then
 	# assume file name to zip is passed
 	convert_file "`zenity --file-selection --file-filter="*.zip"`"
+elif [ "$choice" == "default" ]; then
+	if ! cp ~/.minecraft/versions/1.9/1.9.jar /tmp/mc-default-1.9.zip ; then
+		exit 1
+	fi
+	convert_file /tmp/mc-default-1.9.zip
+	rm /tmp/mc-default-1.9.zip
 fi
