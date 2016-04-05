@@ -176,7 +176,7 @@ rail_normal_turned.png default_rail_curved.png
 red_sand.png default_desert_sand.png
 red_sandstone_normal.png default_desert_stone.png
 red_sandstone_smooth.png default_desert_stone_brick.png
-reeds.png default_papyrus.png
+assets/minecraft/textures/blocks/reeds.png default_papyrus.png
 sand.png default_sand.png
 sandstone_top.png default_sandstone.png
 sandstone_normal.png default_sandstone_brick.png
