@@ -232,13 +232,13 @@ wool_colored_brown.png wool_brown.png
 wool_colored_cyan.png wool_cyan.png
 wool_colored_gray.png wool_dark_grey.png
 wool_colored_green.png wool_dark_green.png
-wool_colored_lime.png wool_green.png.png
+wool_colored_lime.png wool_green.png
 wool_colored_magenta.png wool_magenta.png
 wool_colored_orange.png wool_orange.png
 wool_colored_pink.png wool_pink.png
-wool_colored_purple.png wool_purple.png
+wool_colored_purple.png wool_violet.png
 wool_colored_red.png wool_red.png
-wool_colored_silver.png wool_light_grey.png
+wool_colored_silver.png wool_grey.png
 wool_colored_white.png wool_white.png
 wool_colored_yellow.png wool_yellow.png
 RENAMES
