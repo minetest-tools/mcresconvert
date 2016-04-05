@@ -116,7 +116,6 @@ fence_spruce.png default_fence_pine_wood.png
 fence_jungle.png default_fence_junglewood.png
 fire_layer_0.png fire_basic_flame_animated.png
 flint.png default_flint.png
-flint_and_steel.png fire_flint_steel.png
 flower_allium.png flowers_viola.png
 flower_blue_orchid.png flowers_geranium.png
 flower_dandelion.png flowers_dandelion_yellow.png
@@ -475,14 +474,39 @@ RENAMES
 		# attempt to make desert cobblestone
 		if [ -f _n/cobblestone.png -a -f _n/red_sand.png ]; then
 			convert _n/red_sand.png -resize 1x1 -resize ${PXSIZE}x${PXSIZE} _n/_c.png
-			convert _n/cobblestone.png _n/_c.png -compose Overlay  -composite default_desert_cobble.png
+			convert _n/cobblestone.png _n/_c.png -compose Overlay -composite default_desert_cobble.png
 			echo -e "." >> _n/_tot
 			echo -e "." >> _n/_counter
 		fi
 
 		# make copper and bronze from colorizing steel
-		if [ -f _n/steel_ingot.png -a ]; then
-			:
+		if [ -f _n/iron_ingot.png ]; then
+			#ffa05b
+			convert -size ${PXSIZE}x${PXSIZE} xc:\#CA8654 _n/_c.png
+
+			composite -compose Screen _n/_c.png _n/iron_ingot.png _n/_i.png
+			composite -compose Dst_In _n/iron_ingot.png _n/_i.png -alpha Set default_copper_ingot.png
+
+			composite -compose Screen _n/_c.png _n/iron_block.png _n/_i.png
+			composite -compose Dst_In _n/iron_block.png _n/_i.png -alpha Set default_copper_block.png
+
+			#ffb07c
+			convert -size ${PXSIZE}x${PXSIZE} xc:\#6F4C35 _n/_c.png
+
+			composite -compose Screen _n/_c.png _n/iron_ingot.png _n/_i.png
+			composite -compose Dst_In _n/iron_ingot.png _n/_i.png -alpha Set default_bronze_ingot.png
+
+			composite -compose Screen _n/_c.png _n/iron_block.png _n/_i.png
+			composite -compose Dst_In _n/iron_block.png _n/_i.png -alpha Set default_bronze_block.png
+			echo -e "...." >> _n/_tot
+			echo -e "...." >> _n/_counter
+		fi
+
+		# de-animate flint and steel
+		if [ -f _n/flint_and_steel.png ]; then
+			convert -background none -gravity North -extent ${PXSIZE}x${PXSIZE} _n/flint_and_steel.png fire_flint_steel.png
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
 		fi
 
 		# cactus needs manual cropping
