@@ -487,8 +487,7 @@ RENAMES
 			composite -compose Screen _n/_c.png _n/iron_ingot.png _n/_i.png
 			composite -compose Dst_In _n/iron_ingot.png _n/_i.png -alpha Set default_copper_ingot.png
 
-			composite -compose Screen _n/_c.png _n/iron_block.png _n/_i.png
-			composite -compose Dst_In _n/iron_block.png _n/_i.png -alpha Set default_copper_block.png
+			convert _n/iron_block.png _n/_c.png -compose Overlay -composite default_copper_block.png
 
 			#ffb07c
 			convert -size ${PXSIZE}x${PXSIZE} xc:\#6F4C35 _n/_c.png
@@ -496,8 +495,7 @@ RENAMES
 			composite -compose Screen _n/_c.png _n/iron_ingot.png _n/_i.png
 			composite -compose Dst_In _n/iron_ingot.png _n/_i.png -alpha Set default_bronze_ingot.png
 
-			composite -compose Screen _n/_c.png _n/iron_block.png _n/_i.png
-			composite -compose Dst_In _n/iron_block.png _n/_i.png -alpha Set default_bronze_block.png
+			convert _n/iron_block.png _n/_c.png -compose Overlay -composite default_bronze_block.png
 			echo -e "...." >> _n/_tot
 			echo -e "...." >> _n/_counter
 		fi
