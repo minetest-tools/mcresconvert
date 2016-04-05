@@ -71,8 +71,8 @@ bucket_empty.png bucket.png
 bucket_lava.png bucket_lava.png
 bucket_water.png bucket_water.png
 bucket_water.png bucket_river_water.png
-../_z/assets/minecraft/textures/items/brick.png default_clay_brick.png
-../_z/assets/minecraft/textures/blocks/brick.png default_brick.png
+assets/minecraft/textures/items/brick.png default_clay_brick.png
+assets/minecraft/textures/blocks/brick.png default_brick.png
 clay_ball.png default_clay_lump.png
 clay.png default_clay.png
 coal.png default_coal_lump.png
@@ -188,7 +188,7 @@ sapling_acacia.png default_acacia_sapling.png
 seeds_wheat.png farming_wheat_seed.png
 sign.png default_sign_wood.png
 snowball.png default_snowball.png
-snow.png default_snow.png
+assets/minecraft/textures/blocks/snow.png default_snow.png
 stick.png default_stick.png
 string.png farming_cotton.png
 stone_axe.png default_tool_stoneaxe.png
@@ -247,6 +247,9 @@ RENAMES
 			if [ -f "_n/$IN" ]; then
 				echo -e "." >> _n/_counter
 				cp "_n/$IN" "$OUT"
+			elif [ -f "../_z/$IN" ]; then
+				echo -e "." >> _n/_counter
+				cp "../_z/$IN" "$OUT"
 			# uncomment below 2 lines to see if any textures were not found.
 			#else
 			#	echo "+$IN $OUT $FLAG: Not Found"
