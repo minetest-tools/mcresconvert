@@ -517,6 +517,20 @@ RENAMES
 			echo -e ".." >> _n/_counter
 		fi
 
+		# steel ladder
+		if [ -f _n/ladder.png ]; then
+			convert _n/ladder.png -channel RGBA -matte -colorspace gray default_ladder_steel.png
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
+		fi
+
+		# steel sign
+		if [ -f _n/sign.png ]; then
+			convert _n/sign.png -channel RGBA -matte -colorspace gray default_sign_steel.png
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
+		fi
+
 		# logo
 		if [ -f _n/pack.png ]; then
 			# fix aspect ratio
