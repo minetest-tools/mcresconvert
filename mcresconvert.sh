@@ -80,7 +80,6 @@ coal_block.png default_coal_block.png
 coal_ore.png default_mineral_coal.png
 cobblestone.png default_cobble.png
 cobblestone_mossy.png default_mossycobble.png
-copper.png default_copper_block.png
 deadbush.png default_dry_shrub.png
 diamond.png default_diamond.png
 diamond_axe.png default_tool_diamondaxe.png
@@ -166,6 +165,7 @@ log_spruce.png default_pine_tree.png
 log_spruce_top.png default_pine_tree_top.png
 mushroom_brown.png flowers_mushroom_brown.png
 mushroom_red.png flowers_mushroom_red.png
+obsidian.png default_obsidian.png
 paper.png default_paper.png
 planks_acacia.png default_acacia_wood.png
 planks_birch.png default_aspen_wood.png
@@ -341,6 +341,8 @@ RENAMES
 			convert_alphatex $FOLIAG leaves_spruce.png 226+240 ${PXSIZE} default_pine_needles.png
 			convert_alphatex $FOLIAG leaves_birch.png 70+120 ${PXSIZE} default_aspen_leaves.png
 			convert_alphatex $FOLIAG leaves_jungle.png 16+32 ${PXSIZE} default_jungleleaves.png
+			echo -e "." >> _n/_tot
+			echo -e "." >> _n/_counter
 		fi
 
 		# compose doors texture maps
@@ -478,6 +480,11 @@ RENAMES
 			echo -e "." >> _n/_counter
 		fi
 
+		# make copper and bronze from colorizing steel
+		if [ -f _n/steel_ingot.png -a ]; then
+			:
+		fi
+
 		# cactus needs manual cropping
 		if [ -f _n/cactus_top.png ]; then
 			convert _n/cactus_top.png -crop +$((PXSIZE/16))+$((PXSIZE/16))x$(((PXSIZE/16)*14))x$(((PXSIZE/16)*14)) -gravity center -extent $(((PXSIZE/16)*14))x$(((PXSIZE/16)*14)) default_cactus_top.png
@@ -490,6 +497,8 @@ RENAMES
 		if [ -f _n/pack.png ]; then
 			# fix aspect ratio
 			convert _n/pack.png -gravity North -resize 128x128 -background none -extent 160x148 screenshot.png
+			echo -e ".." >> _n/_tot
+			echo -e ".." >> _n/_counter
 		elif [ -f _n/grass_side.png -a -f _n/dirt.png ]; then
 			# make something up
 			montage -geometry +0+0 _n/grass_side.png _n/grass_side.png _n/grass_side.png _n/grass_side.png \
