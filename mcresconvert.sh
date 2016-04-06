@@ -425,7 +425,8 @@ RENAMES
 
 		if [ -f _n/sun.png ]; then
 			convert _n/sun.png -colorspace HSB -separate _n/_mask.png
-			convert _n/sun.png -alpha Off _n/_mask-2.png -compose CopyOpacity -composite PNG32:sun.png
+			convert _n/sun.png -fill '#a1a1a1' -draw 'color 0,0 reset' _n/_lighten.png
+			convert _n/_lighten.png _n/sun.png -compose Lighten_Intensity -composite -alpha Off _n/_mask-2.png -compose CopyOpacity -composite PNG32:sun.png
 			convert sun.png -bordercolor black -border 1x1 -fuzz 0% -trim sun.png
 			rm _n/_mask*
 			echo -e "." >> _n/_tot
