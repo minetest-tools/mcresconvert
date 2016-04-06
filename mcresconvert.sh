@@ -461,8 +461,8 @@ RENAMES
 
 		# health & breath
 		if [ -f _n/icons.png ]; then
-			convert _n/icons.png -background none -gravity NorthWest -crop 9x9+52+0 heart.png
-			convert _n/icons.png -background none -gravity NorthWest -crop 9x9+16+18 bubble.png
+			convert _n/icons.png -resize 256x256 -background none -gravity NorthWest -crop 9x9+52+0 heart.png
+			convert _n/icons.png -resize 256x256 -background none -gravity NorthWest -crop 9x9+16+18 bubble.png
 			echo -e "." >> _n/_tot
 			echo -e "." >> _n/_counter
 		fi
