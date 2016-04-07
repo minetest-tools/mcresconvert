@@ -343,6 +343,7 @@ RENAMES
 			convert_alphatex $FOLIAG leaves_spruce.png 226+240 ${PXSIZE} default_pine_needles.png
 			convert_alphatex $FOLIAG leaves_birch.png 70+120 ${PXSIZE} default_aspen_leaves.png
 			convert_alphatex $FOLIAG leaves_jungle.png 16+32 ${PXSIZE} default_jungleleaves.png
+			convert_alphatex $FOLIAG waterlily.png 16+32 ${PXSIZE} flowers_waterlily.png
 			echo -e "." >> _n/_tot
 			echo -e "." >> _n/_counter
 		fi
