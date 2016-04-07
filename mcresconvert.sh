@@ -247,9 +247,9 @@ RENAMES
 			if [ -f "_n/$IN" ]; then
 				echo -e "." >> _n/_counter
 				cp "_n/$IN" "$OUT"
-			elif [ -f "../_z/$IN" ]; then
+			elif [ -f "_z/$IN" ]; then
 				echo -e "." >> _n/_counter
-				cp "../_z/$IN" "$OUT"
+				cp "_z/$IN" "$OUT"
 			# uncomment below 2 lines to see if any textures were not found.
 			#else
 			#	echo "+$IN $OUT $FLAG: Not Found"
