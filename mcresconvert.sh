@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ZENITY="zenity --width 800 --title mcresconvert"
+
 for required in unzip convert composite zenity; do
 	type $required > /dev/null
 	if [ $? -ne 0 ]; then
@@ -26,7 +28,7 @@ convert_file() {
 	echo "   - File: `basename "$@"`"
 	(
 		if ! mkdir "$n" > /dev/null 2>&1 ; then
-			if ! zenity --question --width 800 --text="A texture pack folder with name \"$n\" already exists, overwrite?" --default-cancel ; then
+			if ! $ZENITY --question --text="A texture pack folder with name \"$n\" already exists, overwrite?" --default-cancel ; then
 				exit 0
 			fi
 			rm -rf "$n"
@@ -248,8 +250,8 @@ RENAMES
 				echo -e "." >> _n/_counter
 				cp "_z/$IN" "$OUT"
 			# uncomment below 2 lines to see if any textures were not found.
-			else
-				echo "+$IN $OUT $FLAG: Not Found"
+			#else
+			#	echo "+$IN $OUT $FLAG: Not Found"
 			fi
 		done
 
@@ -565,9 +567,9 @@ if [ -n "$1" ]; then
 	exit $?
 fi
 
-choice=`zenity --list --title "Choose resource packs to convert" --column="Convert" \
+choice=`$ZENITY --list --title "Choose resource packs to convert" --column="Convert" \
 	--text "Do you want to convert installed resource packs, or convert a single zip file?" \
-	--column="Description" --height 400 --width 800 \
+	--column="Description" --height 400 \
 	"all" "Find Minecraft resource packs installed in your minecraft folders and convert those automatically" \
 	"default" "Convert the default resource pack" \
 	"other" "Choose a file to convert manually"`
@@ -584,7 +586,7 @@ if [ "$choice" == "all" ]; then
 	done
 elif [ "$choice" == "other" ]; then
 	# assume file name to zip is passed
-	convert_file "`zenity --file-selection --file-filter="*.zip"`"
+	convert_file "`$ZENITY --file-selection --file-filter="*.zip"`"
 elif [ "$choice" == "default" ]; then
 	if ! cp ~/.minecraft/versions/1.9/1.9.jar /tmp/mc-default-1.9.zip ; then
 		exit 1
