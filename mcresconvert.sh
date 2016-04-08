@@ -42,7 +42,7 @@ convert_file() {
 		chmod -R +w *
 		rm -rf __MACOSX
 		# beware of zip files with a random extra toplevel folder.
-		ln -sf _z/`find * -name 'assets' -type 'd'`/minecraft/textures ../_n
+		ln -sf _z/"`find * -name 'assets' -type 'd'`"/minecraft/textures ../_n
 		cd ..
 
 		# try and determine px size
@@ -108,11 +108,6 @@ items/dye_powder_white.png dye_white.png
 items/dye_powder_yellow.png dye_yellow.png
 blocks/farmland_dry.png farming_soil.png
 blocks/farmland_wet.png farming_soil_wet.png
-blocks/fence_acacia.png default_fence_acacia_wood.png
-blocks/fence_oak.png default_fence_wood.png
-blocks/fence_birch.png default_fence_aspen_wood.png
-blocks/fence_spruce.png default_fence_pine_wood.png
-blocks/fence_jungle.png default_fence_junglewood.png
 blocks/fire_layer_0.png fire_basic_flame_animated.png
 items/flint.png default_flint.png
 blocks/flower_allium.png flowers_viola.png
@@ -315,10 +310,12 @@ RENAMES
 			convert_alphatex _n/colormap/grass.png blocks/grass_side_overlay.png 16+240 ${PXSIZE} default_dry_grass_side.png
 
 			# jungle grass - compose from tall grass 2 parts
-			convert_alphatex _n/colormap/grass.png blocks/double_plant_grass_bottom.png 16+32 ${PXSIZE} _n/_jgb.png
-			convert_alphatex _n/colormap/grass.png blocks/double_plant_grass_top.png 16+32 ${PXSIZE} _n/_jgt.png
-			montage -tile 1x2 -geometry +0+0 -background none _n/_jgt.png _n/_jgb.png default_junglegrass.png
-			convert default_junglegrass.png -background none -gravity South -extent $((PXSIZE*2))x$((PXSIZE*2)) default_junglegrass.png
+			if [ -f _n/colormap/grass.png -a -f blocks/double_plant_grass_bottom.png -a -f blocks/double_plant_grass_top.png ]; then
+				convert_alphatex _n/colormap/grass.png blocks/double_plant_grass_bottom.png 16+32 ${PXSIZE} _n/_jgb.png
+				convert_alphatex _n/colormap/grass.png blocks/double_plant_grass_top.png 16+32 ${PXSIZE} _n/_jgt.png
+				montage -tile 1x2 -geometry +0+0 -background none _n/_jgt.png _n/_jgb.png default_junglegrass.png
+				convert default_junglegrass.png -background none -gravity South -extent $((PXSIZE*2))x$((PXSIZE*2)) default_junglegrass.png
+			fi
 		fi
 
 		# crack
@@ -384,24 +381,34 @@ RENAMES
 		fi
 
 		# fences - make alternative from planks
-		if [ ! -f _n/blocks/fence_oak.png ]; then
+		if [ ! -f _n/blocks/fence_oak.png -a -f _n/blocks/planks_oak.png ]; then
 			convert _n/blocks/planks_oak.png \( -clone 0 -crop $((PXSIZE))x$((PXSIZE/4))+0+$(((PXSIZE/8)*3)) -rotate 90 -gravity center \) -composite default_fence_wood.png
+		elif [ -f _n/blocks/fence_oak.png ]; then
+			cp _n/blocks/fence_oak.png default_fence_wood.png
 		fi
 
-		if [ ! -f _n/blocks/fence_acacia.png ]; then
+		if [ ! -f _n/blocks/fence_acacia.png -a -f _n/blocks/planks_acacia.png ]; then
 			convert _n/blocks/planks_acacia.png \( -clone 0 -crop $((PXSIZE))x$((PXSIZE/4))+0+$(((PXSIZE/8)*3)) -rotate 90 -gravity center \) -composite default_fence_acacia_wood.png
+		elif [ -f _n/blocks/fence_acacia.png ]; then
+			cp _n/blocks/fence_acacia.png default_fence_acacia_wood.png
 		fi
 
-		if [ ! -f _n/blocks/fence_spruce.png ]; then
+		if [ ! -f _n/blocks/fence_spruce.png -a -f _n/blocks/planks_spruce.png ]; then
 			convert _n/blocks/planks_spruce.png \( -clone 0 -crop $((PXSIZE))x$((PXSIZE/4))+0+$(((PXSIZE/8)*3)) -rotate 90 -gravity center \) -composite default_fence_pine_wood.png
+		elif [ -f _n/blocks/fence_spruce.png ]; then
+			cp _n/blocks/fence_spruce.png default_fence_pine_wood.png
 		fi
 
-		if [ ! -f _n/blocks/fence_jungle.png ]; then
+		if [ ! -f _n/blocks/fence_jungle.png -a -f _n/blocks/planks_jungle.png ]; then
 			convert _n/blocks/planks_jungle.png \( -clone 0 -crop $((PXSIZE))x$((PXSIZE/4))+0+$(((PXSIZE/8)*3)) -rotate 90 -gravity center \) -composite default_fence_junglewood.png
+		elif [ -f _n/blocks/fence_jungle.png ]; then
+			cp _n/blocks/fence_jungle.png default_fence_junglewood.png
 		fi
 
-		if [ ! -f _n/blocks/fence_birch.png ]; then
+		if [ ! -f _n/blocks/fence_birch.png -a -f _n/blocks/planks_birch.png ]; then
 			convert _n/blocks/planks_birch.png \( -clone 0 -crop $((PXSIZE))x$((PXSIZE/4))+0+$(((PXSIZE/8)*3)) -rotate 90 -gravity center \) -composite default_fence_aspen_wood.png
+		elif [ -f _n/blocks/fence_birch.png ]; then
+			cp _n/blocks/fence_birch.png default_fence_aspen_wood.png
 		fi
 
 		# chest textures
@@ -534,9 +541,9 @@ RENAMES
 
 		# logo
 		echo -e ".." >> _n/_tot
-		if [ -f _z/pack.png ]; then
+		if [ -n "`find _z -name pack.png -type f`" ]; then
 			# fix aspect ratio
-			convert _z/pack.png -gravity North -resize 128x128 -background none -extent 160x148 screenshot.png
+			convert "`find _z -name pack.png -type f | head -n 1`" -gravity North -resize 128x128 -background none -extent 160x148 screenshot.png
 			echo -e ".." >> _n/_counter
 		elif [ -f _n/blocks/grass_side.png -a -f _n/dirt.png ]; then
 			# make something up
