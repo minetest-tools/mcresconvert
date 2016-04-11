@@ -8,7 +8,7 @@ in your minetest textures folder.
 If you wish to convert a specific file only (has to be zip format), then
 pass the path to the script as argument.
 
-Dependencies: zenity, ImageMagick
+Dependencies: zenity(optional, but recommended), ImageMagick
 
 ====
 
