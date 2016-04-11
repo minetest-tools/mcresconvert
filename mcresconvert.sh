@@ -2,7 +2,16 @@
 
 ZENITY="zenity --width 800 --title mcresconvert"
 
-for required in unzip convert composite zenity; do
+if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+	echo "Usage: $(basename $0) [OPTIONS]"
+	echo "   [OPTIONS] can be:"
+	echo "   - <file>    - a zip filename to convert"
+	echo "   - all       - attempts to convert all installed resource packs"
+	echo "   - default   - attempts to convert the default resource pack"
+	exit 1
+fi
+
+for required in unzip convert composite; do
 	type $required > /dev/null
 	if [ $? -ne 0 ]; then
 		echo "Unable to find \"$required\" program, exiting"
@@ -10,7 +19,11 @@ for required in unzip convert composite zenity; do
 	fi
 done
 
-cd ~/.minetest/textures || exit 1
+type zenity > /dev/null
+if [ $? -ne 0 ]; then
+	echo "WARNING: Zenity not found, attempting to continue without gui support"
+	NOGUI=yes
+fi
 
 convert_alphatex() {
 	if [ -f _n/$2 ]; then
@@ -27,22 +40,26 @@ convert_file() {
 	echo "Found: $n"
 	echo "   - File: `basename "$@"`"
 	(
-		if ! mkdir "$n" > /dev/null 2>&1 ; then
-			if ! $ZENITY --question --text="A texture pack folder with name \"$n\" already exists, overwrite?" --default-cancel ; then
-				exit 0
+		if ! mkdir ~/.minetest/textures/$n > /dev/null 2>&1 ; then
+			if [ -n "$NOGUI" ]; then
+				echo "A texture pack with this name already exists, remove it before trying again."
+				exit 1
+			else
+				if ! $ZENITY --question --text="A texture pack folder with name \"$n\" already exists, overwrite?" --default-cancel ; then
+					exit 1
+				fi
 			fi
-			rm -rf "$n"
-			mkdir -p "$n"
+			rm -rf ~/.minetest/textures/$n
+			mkdir ~/.minetest/textures/$n
 		fi
-		cd "$n"
-		mkdir _z
-		cd _z
-		unzip -qq "$@"
+		mkdir ~/.minetest/textures/$n/_z
+		unzip -qq "$@" -d ~/.minetest/textures/$n/_z
+		cd ~/.minetest/textures/$n/_z
 		# what a bunch of nonsense
 		chmod -R +w *
 		rm -rf __MACOSX
 		# beware of zip files with a random extra toplevel folder.
-		ln -sf _z/"`find * -name 'assets' -type 'd'`"/minecraft/textures ../_n
+		ln -sf _z/"`find * -name 'assets' -type 'd'`"/minecraft/textures ../_n || exit 1
 		cd ..
 
 		# try and determine px size
@@ -575,12 +592,19 @@ if [ -n "$1" ]; then
 	exit $?
 fi
 
-choice=`$ZENITY --list --title "Choose resource packs to convert" --column="Convert" \
+if [ -n "$NOGUI" ]; then
+	choice=$1
+	if [ -z "$choice" ]; then
+		choice=all
+	fi
+else
+	choice=`$ZENITY --list --title "Choose resource packs to convert" --column="Convert" \
 	--text "Do you want to convert installed resource packs, or convert a single zip file?" \
 	--column="Description" --height 400 \
 	"all" "Find Minecraft resource packs installed in your minecraft folders and convert those automatically" \
 	"default" "Convert the default resource pack" \
 	"other" "Choose a file to convert manually"`
+fi
 
 if [ "$choice" == "all" ]; then
 	echo "Automatically converting resourcepacks and texturepacks found..."
