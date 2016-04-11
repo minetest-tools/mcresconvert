@@ -476,8 +476,9 @@ RENAMES
 		# steve? ha! This assumes 64x32 dimensions, won't work well with 1.8 skins.
 		echo -e "." >> _n/_tot
 		if [ -f _n/entity/steve.png ]; then
+			S=`identify -format "%[fx:w]" _n/entity/steve.png`
 			convert _n/entity/steve.png -background none -gravity NorthWest \
-			-extent 64x32 character.png
+			-extent $((S))x$((S/2)) character.png
 			echo -e "." >> _n/_counter
 		fi
 
