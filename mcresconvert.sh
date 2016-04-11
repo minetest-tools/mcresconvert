@@ -586,16 +586,13 @@ RENAMES
 	)
 }
 
-# manually passed a file name?
-if [ -n "$1" ]; then
-	convert_file "$@"
-	exit $?
-fi
-
 if [ -n "$NOGUI" ]; then
 	choice=$1
 	if [ -z "$choice" ]; then
 		choice=all
+	elif [ "$choice" != all ] && [ "$choice" != default ]; then
+		convert_file "$@"
+		exit $?
 	fi
 else
 	choice=`$ZENITY --list --title "Choose resource packs to convert" --column="Convert" \
