@@ -552,8 +552,8 @@ RENAMES
 
 		# steel sign
 		echo -e "." >> _n/_tot
-		if [ -f _n/blocks/sign.png ]; then
-			convert _n/blocks/sign.png -channel RGBA -matte -colorspace gray default_sign_steel.png
+		if [ -f _n/items/sign.png ]; then
+			convert _n/items/sign.png -channel RGBA -matte -colorspace gray default_sign_steel.png
 			echo -e "." >> _n/_counter
 		fi
 
