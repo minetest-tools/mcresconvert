@@ -100,7 +100,7 @@ blocks/deadbush.png default_dry_shrub.png
 items/diamond.png default_diamond.png
 items/diamond_axe.png default_tool_diamondaxe.png
 blocks/diamond_block.png default_diamond_block.png
-items/diamond_hoe.png farming_diamondhoe.png
+items/diamond_hoe.png farming_tool_diamondhoe.png
 blocks/diamond_ore.png default_mineral_diamond.png
 items/diamond_pickaxe.png default_tool_diamondpick.png
 items/diamond_shovel.png default_tool_diamondshovel.png
