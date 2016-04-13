@@ -451,7 +451,7 @@ RENAMES
 			convert _n/environment/sun.png -colorspace HSB -separate _n/_mask.png
 			convert _n/environment/sun.png -fill '#a1a1a1' -draw 'color 0,0 reset' _n/_lighten.png
 			convert _n/_lighten.png _n/environment/sun.png -compose Lighten_Intensity -composite -alpha Off _n/_mask-2.png -compose CopyOpacity -composite PNG32:sun.png
-			convert sun.png -bordercolor black -border 1x1 -fuzz 0% -trim sun.png
+			convert sun.png -bordercolor none -border 1x1 -fuzz 0% -trim sun.png
 			rm _n/_mask*
 			echo -e "." >> _n/_counter
 		fi
@@ -461,7 +461,7 @@ RENAMES
 			convert _n/environment/moon_phases.png -colorspace HSB -separate _n/_mask.png
 			convert _n/environment/moon_phases.png -alpha Off _n/_mask-2.png -compose CopyOpacity -composite PNG32:moon.png
 			convert -background none moon.png -gravity NorthWest -extent ${S}x${S} moon.png
-			convert moon.png -bordercolor black -border 1x1 -fuzz 0% -trim moon.png
+			convert moon.png -bordercolor none -border 1x1 -fuzz 0% -trim moon.png
 			echo -e "." >> _n/_counter
 		fi
 
