@@ -45,7 +45,7 @@ convert_file() {
 				echo "A texture pack with this name already exists, remove it before trying again."
 				exit 1
 			else
-				if ! $ZENITY --question --text="A texture pack folder with name \"$n\" already exists, overwrite?" --default-cancel ; then
+				if ! $ZENITY --question --text="A texture pack folder with name \"$n\" already exists, overwrite?" --default-cancel 2> /dev/null ; then
 					exit 1
 				fi
 			fi
@@ -600,7 +600,7 @@ else
 	--column="Description" --height 400 \
 	"all" "Find Minecraft resource packs installed in your minecraft folders and convert those automatically" \
 	"default" "Convert the default resource pack" \
-	"other" "Choose a file to convert manually"`
+	"other" "Choose a file to convert manually" 2> /dev/null`
 fi
 
 if [ "$choice" == "all" ]; then
@@ -615,7 +615,7 @@ if [ "$choice" == "all" ]; then
 	done
 elif [ "$choice" == "other" ]; then
 	# assume file name to zip is passed
-	convert_file "`$ZENITY --file-selection --file-filter="*.zip"`"
+	convert_file "`$ZENITY --file-selection --file-filter="*.zip" 2> /dev/null`"
 elif [ "$choice" == "default" ]; then
 	if ! cp ~/.minecraft/versions/1.9/1.9.jar /tmp/mc-default-1.9.zip ; then
 		exit 1
