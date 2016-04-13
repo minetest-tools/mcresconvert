@@ -327,7 +327,7 @@ RENAMES
 			convert_alphatex _n/colormap/grass.png blocks/grass_side_overlay.png 16+240 ${PXSIZE} default_dry_grass_side.png
 
 			# jungle grass - compose from tall grass 2 parts
-			if [ -f _n/colormap/grass.png -a -f blocks/double_plant_grass_bottom.png -a -f blocks/double_plant_grass_top.png ]; then
+			if [ -f _n/colormap/grass.png -a -f _n/blocks/double_plant_grass_bottom.png -a -f _n/blocks/double_plant_grass_top.png ]; then
 				convert_alphatex _n/colormap/grass.png blocks/double_plant_grass_bottom.png 16+32 ${PXSIZE} _n/_jgb.png
 				convert_alphatex _n/colormap/grass.png blocks/double_plant_grass_top.png 16+32 ${PXSIZE} _n/_jgt.png
 				montage -tile 1x2 -geometry +0+0 -background none _n/_jgt.png _n/_jgb.png default_junglegrass.png
