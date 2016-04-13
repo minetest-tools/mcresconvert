@@ -139,7 +139,7 @@ blocks/furnace_side.png default_furnace_side.png
 blocks/furnace_top.png default_furnace_bottom.png
 blocks/furnace_top.png default_furnace_top.png
 blocks/glass.png default_glass.png
-blocks/glass_black.png default_obsidian_glass.png
+blocks/glass_gray.png default_obsidian_glass.png
 blocks/gold_block.png default_gold_block.png
 items/gold_ingot.png default_gold_ingot.png
 items/gold_nugget.png default_gold_lump.png
