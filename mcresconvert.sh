@@ -557,6 +557,15 @@ RENAMES
 			echo -e "." >> _n/_counter
 		fi
 
+		# emerald -> mese
+		if [ -f _n/blocks/emerald_ore.png ]; then
+			compare _n/blocks/stone.png _n/blocks/emerald_ore.png -metric AE -fuzz 5% -compose Src -highlight-color White -lowlight-color none _n/m.png 2> /dev/null
+			composite -compose Dst_In -gravity center _n/m.png _n/blocks/emerald_ore.png -alpha Set _n/o.png
+			convert _n/o.png -modulate 100,100,80 default_mineral_mese.png
+			convert _n/blocks/emerald_block.png -modulate 100,100,80 default_mese_block.png
+			convert _n/items/emerald.png -modulate 100,100,80 default_mese_crystal.png
+		fi
+
 		# logo
 		echo -e ".." >> _n/_tot
 		if [ -n "`find _z -name pack.png -type f`" ]; then
