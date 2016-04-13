@@ -570,7 +570,8 @@ RENAMES
 		echo -e ".." >> _n/_tot
 		if [ -n "`find _z -name pack.png -type f`" ]; then
 			# fix aspect ratio
-			convert "`find _z -name pack.png -type f | head -n 1`" -gravity North -resize 128x128 -background none -extent 160x148 screenshot.png
+			#convert "`find _z -name pack.png -type f | head -n 1`" -gravity North -resize 128x128 -background none -extent 160x148 screenshot.png
+			cp "`find _z -name pack.png -type f | head -n 1`" screenshot.png
 			echo -e ".." >> _n/_counter
 		elif [ -f _n/blocks/grass_side.png -a -f _n/dirt.png ]; then
 			# make something up
