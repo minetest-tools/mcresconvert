@@ -339,7 +339,8 @@ RENAMES
 		echo -e "." >> _n/_tot
 		if [ -f "_n/blocks/destroy_stage_0.png" ]; then
 			c=( _n/blocks/destroy_stage_*.png )
-			montage -tile 1x${#c[@]} -geometry +0+0 -background none ${c[@]} crack_anylength.png
+			montage -tile 1x${#c[@]} -geometry +0+0 -background none ${c[@]} _n/c.png
+			convert _n/c.png -alpha on -background none -channel A -evaluate Min 50% crack_anylength.png
 			echo -e "." >> _n/_counter
 		fi
 
