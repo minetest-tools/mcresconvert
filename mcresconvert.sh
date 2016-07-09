@@ -40,21 +40,30 @@ convert_file() {
 	echo "Found: $n"
 	echo "   - File: `basename "$@"`"
 	(
-		if ! mkdir ~/.minetest/textures/$n > /dev/null 2>&1 ; then
+		texture_dir=~/.minetest/textures
+		if [ ! -d $texture_dir ]; then
+		  if [ -n "$NOGUI" ]; then
+				echo "Creating texture directory under: \"$texture_dir\"."
+			else
+				$ZENITY --info --text="Creating texture directory under: \"$texture_dir\"." 2> /dev/null ;
+			fi
+			mkdir -p $texture_dir
+		fi
+		if ! mkdir $texture_dir/$n > /dev/null 2>&1 ; then
 			if [ -n "$NOGUI" ]; then
-				echo "A texture pack with this name already exists, remove it before trying again."
+				echo "A texture pack with name \"$n\" already exists, remove it before trying again."
 				exit 1
 			else
 				if ! $ZENITY --question --text="A texture pack folder with name \"$n\" already exists, overwrite?" --default-cancel 2> /dev/null ; then
 					exit 1
 				fi
 			fi
-			rm -rf ~/.minetest/textures/$n
-			mkdir ~/.minetest/textures/$n
+			rm -rf $texture_dir/$n
+			mkdir $texture_dir/$n
 		fi
-		mkdir ~/.minetest/textures/$n/_z
-		unzip -qq "$@" -d ~/.minetest/textures/$n/_z
-		cd ~/.minetest/textures/$n/_z
+		mkdir $texture_dir/$n/_z
+		unzip -qq "$@" -d $texture_dir/$n/_z
+		cd $texture_dir/$n/_z
 		# what a bunch of nonsense
 		chmod -R +w *
 		rm -rf __MACOSX
