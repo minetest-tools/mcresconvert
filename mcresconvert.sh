@@ -62,13 +62,22 @@ convert_file() {
 			mkdir $texture_dir/$n
 		fi
 		mkdir $texture_dir/$n/_z
-		unzip -qq "$@" -d $texture_dir/$n/_z
+		unzip -qq "$@" -d $texture_dir/$n/_z || exit 1
 		cd $texture_dir/$n/_z
 		# what a bunch of nonsense
 		chmod -R +w *
 		rm -rf __MACOSX
+		assets_dir=`find * -name 'assets' -type 'd'`
+		if [ -z "$assets_dir" ]; then
+			echo "No 'assets' found in $@"
+			exit 1
+		fi
+		if [ ! -d "$assets_dir"/minecraft/textures ]; then
+			echo "No directory \"$assets_dir/minecraft/textures\" found in $@"
+			exit 1
+		fi 
 		# beware of zip files with a random extra toplevel folder.
-		ln -sf _z/"`find * -name 'assets' -type 'd'`"/minecraft/textures ../_n || exit 1
+		ln -sf _z/"$assets_dir"/minecraft/textures ../_n || exit 1
 		cd ..
 
 		# try and determine px size
