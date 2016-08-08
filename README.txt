@@ -6,9 +6,11 @@ all your MC texture and resource packs and convert them, and put them
 in your minetest textures folder.
 
 If you wish to convert a specific file only (has to be zip format), then
-pass the path to the script as argument.
+pass the path to the script as argument and set the NOGUI envvar:
 
-Dependencies: zenity(optional, but recommended), ImageMagick
+  NOGUI=1 ./mcresconvert.sh ~/Downloads/texturepack.zip
+
+Dependencies: zenity(optional, but recommended), ImageMagick, unzip
 
 ====
 

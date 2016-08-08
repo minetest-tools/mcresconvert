@@ -35,31 +35,84 @@ convert_alphatex() {
 	fi
 }
 
+compose_door() {
+	l=$1
+	u=$2
+	r=$3
+
+	if [ -f $l -a -f $u ]; then
+		# Cut out first frame if animated texture
+		if [ -e $l.mcmeta ]; then
+			w=`file $l |sed 's/.*, \([0-9]*\) x.*/\1/'`
+			convert $l -background none -crop ${w}x${w}+0+0 _n/_cl.png
+			l=_n/_cl.png
+		fi
+		if [ -e $u.mcmeta ]; then
+			w=`file $u |sed 's/.*, \([0-9]*\) x.*/\1/'`
+			convert $u -background none -crop ${w}x${w}+0+0 _n/_cu.png
+			u=_n/_cu.png
+		fi
+		convert -background none $u -resize ${PXSIZE}x${PXSIZE} _n/_u.png
+		convert -background none $l -resize ${PXSIZE}x${PXSIZE} _n/_l.png
+		convert -background none _n/_u.png -flop _n/_fu.png
+		convert -background none _n/_l.png -flop _n/_fl.png
+		montage -background none _n/_fu.png _n/_u.png _n/_fl.png _n/_l.png -geometry +0+0 _n/_d.png
+		convert _n/_d.png -background none -extent $(( (PXSIZE * 2) + (3 * (PXSIZE / 8) ) ))x$((PXSIZE * 2)) _n/_d2.png
+		convert _n/_d2.png \
+			\( -clone 0 -crop $((PXSIZE/8))x$((PXSIZE*2))+$((PXSIZE-1))+0 \) -gravity NorthWest -geometry +$((PXSIZE*2))+0 -composite \
+			\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+0+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(PXSIZE/8)))+0 -composite \
+			\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+$((PXSIZE*2-1))+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(3*(PXSIZE/16))))+0 -composite \
+			\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+0+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(4*(PXSIZE/16))))+0 -composite \
+			\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+$((PXSIZE*2-1))+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(5*(PXSIZE/16))))+0 -composite \
+			$r
+		return 0
+	fi
+	return 1
+}
+
 convert_file() {
 	n=`basename "$@" .zip | tr -d ' \t."()[]' | tr -d "'"`
 	echo "Found: $n"
 	echo "   - File: `basename "$@"`"
 	(
-		if ! mkdir ~/.minetest/textures/$n > /dev/null 2>&1 ; then
+		texture_dir=~/.minetest/textures
+		if [ ! -d $texture_dir ]; then
+		  if [ -n "$NOGUI" ]; then
+				echo "Creating texture directory under: \"$texture_dir\"."
+			else
+				$ZENITY --info --text="Creating texture directory under: \"$texture_dir\"." 2> /dev/null ;
+			fi
+			mkdir -p $texture_dir
+		fi
+		if ! mkdir $texture_dir/$n > /dev/null 2>&1 ; then
 			if [ -n "$NOGUI" ]; then
-				echo "A texture pack with this name already exists, remove it before trying again."
+				echo "A texture pack with name \"$n\" already exists, remove it before trying again."
 				exit 1
 			else
 				if ! $ZENITY --question --text="A texture pack folder with name \"$n\" already exists, overwrite?" --default-cancel 2> /dev/null ; then
 					exit 1
 				fi
 			fi
-			rm -rf ~/.minetest/textures/$n
-			mkdir ~/.minetest/textures/$n
+			rm -rf $texture_dir/$n
+			mkdir $texture_dir/$n
 		fi
-		mkdir ~/.minetest/textures/$n/_z
-		unzip -qq "$@" -d ~/.minetest/textures/$n/_z
-		cd ~/.minetest/textures/$n/_z
+		mkdir $texture_dir/$n/_z
+		unzip -qq "$@" -d $texture_dir/$n/_z || exit 1
+		cd $texture_dir/$n/_z
 		# what a bunch of nonsense
 		chmod -R +w *
 		rm -rf __MACOSX
+		assets_dir=`find * -name 'assets' -type 'd'`
+		if [ -z "$assets_dir" ]; then
+			echo "No 'assets' found in $@"
+			exit 1
+		fi
+		if [ ! -d "$assets_dir"/minecraft/textures ]; then
+			echo "No directory \"$assets_dir/minecraft/textures\" found in $@"
+			exit 1
+		fi
 		# beware of zip files with a random extra toplevel folder.
-		ln -sf _z/"`find * -name 'assets' -type 'd'`"/minecraft/textures ../_n || exit 1
+		ln -sf _z/"$assets_dir"/minecraft/textures ../_n || exit 1
 		cd ..
 
 		# try and determine px size
@@ -262,8 +315,8 @@ RENAMES
 				echo -e "." >> _n/_counter
 				cp "_z/$IN" "$OUT"
 			# uncomment below 2 lines to see if any textures were not found.
-			#else
-			#	echo "+$IN $OUT $FLAG: Not Found"
+			else
+				echo "+$IN $OUT $FLAG: Not Found"
 			fi
 		done
 
@@ -363,38 +416,12 @@ RENAMES
 
 		# compose doors texture maps
 		echo -e "." >> _n/_tot
-		if [ -f _n/blocks/door_wood_lower.png -a -f _n/blocks/door_wood_upper.png ]; then
-			convert -background none _n/blocks/door_wood_upper.png -flop _n/_fu.png
-			convert -background none _n/blocks/door_wood_lower.png -flop _n/_fl.png
-			montage -background none _n/_fu.png _n/blocks/door_wood_upper.png \
-				_n/_fl.png _n/blocks/door_wood_lower.png \
-				-geometry +0+0 _n/_d.png
-			convert _n/_d.png -background none -extent $(( (PXSIZE * 2) + (3 * (PXSIZE / 8) ) ))x$((PXSIZE * 2)) _n/_d2.png
-			convert _n/_d2.png \
-				\( -clone 0 -crop $((PXSIZE/8))x$((PXSIZE*2))+$((PXSIZE-1))+0 \) -gravity NorthWest -geometry +$((PXSIZE*2))+0 -composite \
-				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+0+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(PXSIZE/8)))+0 -composite \
-				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+$((PXSIZE*2-1))+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(3*(PXSIZE/16))))+0 -composite \
-				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+0+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(4*(PXSIZE/16))))+0 -composite \
-				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+$((PXSIZE*2-1))+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(5*(PXSIZE/16))))+0 -composite \
-				doors_door_wood.png
+		if compose_door _n/blocks/door_wood_lower.png _n/blocks/door_wood_upper.png doors_door_wood.png; then
 			echo -e "." >> _n/_counter
 		fi
 
 		echo -e "." >> _n/_tot
-		if [ -f _n/blocks/door_iron_lower.png -a -f _n/blocks/door_iron_upper.png ]; then
-			convert -background none _n/blocks/door_iron_upper.png -flop _n/_fu.png
-			convert -background none _n/blocks/door_iron_lower.png -flop _n/_fl.png
-			montage -background none _n/_fu.png _n/blocks/door_iron_upper.png \
-				_n/_fl.png _n/blocks/door_iron_lower.png \
-				-geometry +0+0 _n/_d.png
-			convert _n/_d.png -background none -extent $(( (PXSIZE * 2) + (3 * (PXSIZE / 8) ) ))x$((PXSIZE * 2)) _n/_d2.png
-			convert _n/_d2.png \
-				\( -clone 0 -crop $((PXSIZE/8))x$((PXSIZE*2))+$((PXSIZE-1))+0 \) -gravity NorthWest -geometry +$((PXSIZE*2))+0 -composite \
-				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+0+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(PXSIZE/8)))+0 -composite \
-				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+$((PXSIZE*2-1))+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(3*(PXSIZE/16))))+0 -composite \
-				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+0+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(4*(PXSIZE/16))))+0 -composite \
-				\( -clone 0 -crop $((PXSIZE/16))x$((PXSIZE*2))+$((PXSIZE*2-1))+0 \) -gravity NorthWest -geometry +$((PXSIZE*2+(5*(PXSIZE/16))))+0 -composite \
-				doors_door_steel.png
+		if compose_door _n/blocks/door_iron_lower.png _n/blocks/door_iron_upper.png doors_door_steel.png; then
 			echo -e "." >> _n/_counter
 		fi
 
