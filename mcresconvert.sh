@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# enable this to see which line cause warnings
+# set -o xtrace
+
 ZENITY="zenity --width 800 --title mcresconvert"
 
 if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
@@ -42,12 +45,12 @@ compose_door() {
 
 	if [ -f $l -a -f $u ]; then
 		# Cut out first frame if animated texture
-		if [ -e $l.mcmeta ]; then
+		if [ -f $l.mcmeta ]; then
 			w=`file $l |sed 's/.*, \([0-9]*\) x.*/\1/'`
 			convert $l -background none -crop ${w}x${w}+0+0 _n/_cl.png
 			l=_n/_cl.png
 		fi
-		if [ -e $u.mcmeta ]; then
+		if [ -f $u.mcmeta ]; then
 			w=`file $u |sed 's/.*, \([0-9]*\) x.*/\1/'`
 			convert $u -background none -crop ${w}x${w}+0+0 _n/_cu.png
 			u=_n/_cu.png
@@ -68,6 +71,35 @@ compose_door() {
 		return 0
 	fi
 	return 1
+}
+
+make_fence() {
+	def=$1
+	plank=$2
+	out=$3
+	if [ ! -f $def -a -f $plank ]; then
+		w=`file $plank |sed 's/.*, \([0-9]*\) x.*/\1/'`
+		if [ $w -eq $((PXSIZE/4)) ]; then
+			convert $plank \( -clone 0 -rotate 90 -gravity center \) -composite $out
+		else
+			convert $plank \( -clone 0 -crop $((PXSIZE))x$((PXSIZE/4))+0+$(((PXSIZE/8)*3)) -rotate 90 -gravity center \) -composite $out
+		fi
+	elif [ -f $def ]; then
+		cp $def $out
+	fi
+}
+
+make_grass() {
+	i=$1
+	cmap=$2
+	def=$3
+	out=$4
+	seg=$5
+	if [ -f $i ]; then
+		convert_alphatex $cmap $i 70+120 ${PXSIZE} $out
+	else
+		convert $def -page +0+$(((PXSIZE/8) * seg)) -background none -flatten $out
+	fi
 }
 
 convert_file() {
@@ -333,50 +365,18 @@ RENAMES
 			echo -e "." >> _n/_counter
 
 			convert_alphatex _n/colormap/grass.png blocks/tallgrass.png 70+120 ${PXSIZE} default_grass_5.png
-			if [ -f tallgrass1.png ]; then
-				convert_alphatex _n/colormap/grass.png blocks/tallgrass1.png 70+120 ${PXSIZE} default_grass_4.png
-			else
-				convert default_grass_5.png -page +0+$(((PXSIZE / 8) * 1)) -background none -flatten default_grass_4.png
-			fi
-			if [ -f tallgrass2.png ]; then
-				convert_alphatex _n/colormap/grass.png blocks/tallgrass2.png 70+120 ${PXSIZE} default_grass_3.png
-			else
-				convert default_grass_5.png -page +0+$(((PXSIZE / 8) * 2)) -background none -flatten default_grass_3.png
-			fi
-			if [ -f tallgrass3.png ]; then
-				convert_alphatex _n/colormap/grass.png blocks/tallgrass3.png 70+120 ${PXSIZE} default_grass_2.png
-			else
-				convert default_grass_5.png -page +0+$(((PXSIZE / 8) * 3)) -background none -flatten default_grass_2.png
-			fi
-			if [ -f tallgrass4.png ]; then
-				convert_alphatex _n/colormap/grass.png blocks/tallgrass4.png 70+120 ${PXSIZE} default_grass_1.png
-			else
-				convert default_grass_5.png -page +0+$(((PXSIZE / 8) * 4)) -background none -flatten default_grass_1.png
-			fi
+			make_grass blocks/tallgrass1.png _n/colormap/grass.png default_grass_5.png default_grass_4.png 1
+			make_grass blocks/tallgrass2.png _n/colormap/grass.png default_grass_5.png default_grass_3.png 2
+			make_grass blocks/tallgrass3.png _n/colormap/grass.png default_grass_5.png default_grass_2.png 3
+			make_grass blocks/tallgrass4.png _n/colormap/grass.png default_grass_5.png default_grass_1.png 4
 			#FIXME tile this
 			convert_alphatex _n/colormap/grass.png blocks/grass_side_overlay.png 70+120 ${PXSIZE} default_grass_side.png
 
 			convert_alphatex _n/colormap/grass.png blocks/tallgrass.png 16+240 ${PXSIZE} default_dry_grass_5.png
-			if [ -f tallgrass1.png ]; then
-				convert_alphatex _n/colormap/grass.png blocks/tallgrass1.png 16+240 ${PXSIZE} default_dry_grass_4.png
-			else
-				convert default_dry_grass_5.png -page +0+$(((PXSIZE / 8) * 1)) -background none -flatten default_dry_grass_4.png
-			fi
-			if [ -f tallgrass2.png ]; then
-				convert_alphatex _n/colormap/grass.png blocks/tallgrass2.png 16+240 ${PXSIZE} default_dry_grass_3.png
-			else
-				convert default_dry_grass_5.png -page +0+$(((PXSIZE / 8) * 2)) -background none -flatten default_dry_grass_3.png
-			fi
-			if [ -f tallgrass3.png ]; then
-				convert_alphatex _n/colormap/grass.png blocks/tallgrass3.png 16+240 ${PXSIZE} default_dry_grass_2.png
-			else
-				convert default_dry_grass_5.png -page +0+$(((PXSIZE / 8) * 3)) -background none -flatten default_dry_grass_2.png
-			fi
-			if [ -f tallgrass4.png ]; then
-				convert_alphatex _n/colormap/grass.png blocks/tallgrass4.png 16+240 ${PXSIZE} default_dry_grass_1.png
-			else
-				convert default_dry_grass_5.png -page +0+$(((PXSIZE / 8) * 4)) -background none -flatten default_dry_grass_1.png
-			fi
+			make_grass blocks/tallgrass1.png _n/colormap/grass.png default_dry_grass_5.png default_dry_grass_4.png 1
+			make_grass blocks/tallgrass2.png _n/colormap/grass.png default_dry_grass_5.png default_dry_grass_3.png 2
+			make_grass blocks/tallgrass3.png _n/colormap/grass.png default_dry_grass_5.png default_dry_grass_2.png 3
+			make_grass blocks/tallgrass4.png _n/colormap/grass.png default_dry_grass_5.png default_dry_grass_1.png 4
 			#FIXME tile this
 			convert_alphatex _n/colormap/grass.png blocks/grass_side_overlay.png 16+240 ${PXSIZE} default_dry_grass_side.png
 
@@ -417,6 +417,8 @@ RENAMES
 		fi
 
 		# compose doors texture maps
+		# TODO: minetest also has doors_door_{glass,obsidian}.png
+		# TODO: minecraft also has: acacia, birch, dark_oak, jungle, spruce
 		echo -e "." >> _n/_tot
 		if compose_door _n/blocks/door_wood_lower.png _n/blocks/door_wood_upper.png doors_door_wood.png; then
 			echo -e "." >> _n/_counter
@@ -428,35 +430,12 @@ RENAMES
 		fi
 
 		# fences - make alternative from planks
-		if [ ! -f _n/blocks/fence_oak.png -a -f _n/blocks/planks_oak.png ]; then
-			convert _n/blocks/planks_oak.png \( -clone 0 -crop $((PXSIZE))x$((PXSIZE/4))+0+$(((PXSIZE/8)*3)) -rotate 90 -gravity center \) -composite default_fence_wood.png
-		elif [ -f _n/blocks/fence_oak.png ]; then
-			cp _n/blocks/fence_oak.png default_fence_wood.png
-		fi
-
-		if [ ! -f _n/blocks/fence_acacia.png -a -f _n/blocks/planks_acacia.png ]; then
-			convert _n/blocks/planks_acacia.png \( -clone 0 -crop $((PXSIZE))x$((PXSIZE/4))+0+$(((PXSIZE/8)*3)) -rotate 90 -gravity center \) -composite default_fence_acacia_wood.png
-		elif [ -f _n/blocks/fence_acacia.png ]; then
-			cp _n/blocks/fence_acacia.png default_fence_acacia_wood.png
-		fi
-
-		if [ ! -f _n/blocks/fence_spruce.png -a -f _n/blocks/planks_spruce.png ]; then
-			convert _n/blocks/planks_spruce.png \( -clone 0 -crop $((PXSIZE))x$((PXSIZE/4))+0+$(((PXSIZE/8)*3)) -rotate 90 -gravity center \) -composite default_fence_pine_wood.png
-		elif [ -f _n/blocks/fence_spruce.png ]; then
-			cp _n/blocks/fence_spruce.png default_fence_pine_wood.png
-		fi
-
-		if [ ! -f _n/blocks/fence_jungle.png -a -f _n/blocks/planks_jungle.png ]; then
-			convert _n/blocks/planks_jungle.png \( -clone 0 -crop $((PXSIZE))x$((PXSIZE/4))+0+$(((PXSIZE/8)*3)) -rotate 90 -gravity center \) -composite default_fence_junglewood.png
-		elif [ -f _n/blocks/fence_jungle.png ]; then
-			cp _n/blocks/fence_jungle.png default_fence_junglewood.png
-		fi
-
-		if [ ! -f _n/blocks/fence_birch.png -a -f _n/blocks/planks_birch.png ]; then
-			convert _n/blocks/planks_birch.png \( -clone 0 -crop $((PXSIZE))x$((PXSIZE/4))+0+$(((PXSIZE/8)*3)) -rotate 90 -gravity center \) -composite default_fence_aspen_wood.png
-		elif [ -f _n/blocks/fence_birch.png ]; then
-			cp _n/blocks/fence_birch.png default_fence_aspen_wood.png
-		fi
+		# TODO: minecraft has: big_oak
+		make_fence _n/blocks/fence_oak.png _n/blocks/planks_oak.png default_fence_wood.png
+		make_fence _n/blocks/fence_acacia.png _n/blocks/planks_acacia.png default_fence_acacia_wood.png
+		make_fence _n/blocks/fence_spruce.png _n/blocks/planks_spruce.png default_fence_pine_wood.png
+		make_fence _n/blocks/fence_jungle.png _n/blocks/planks_jungle.png default_fence_junglewood.png
+		make_fence _n/blocks/fence_birch.png _n/blocks/planks_birch.png default_fence_aspen_wood.png
 
 		# chest textures
 		echo -e "..." >> _n/_tot
