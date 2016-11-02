@@ -305,6 +305,7 @@ blocks/wool_colored_red.png wool_red.png
 blocks/wool_colored_silver.png wool_grey.png
 blocks/wool_colored_white.png wool_white.png
 blocks/wool_colored_yellow.png wool_yellow.png
+blocks/glowstone.png default_meselamp.png
 RENAMES
 ) |		while read IN OUT FLAG; do
 			echo -e "." >> _n/_tot
