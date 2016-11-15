@@ -412,6 +412,7 @@ RENAMES
 			convert_alphatex $FOLIAG blocks/leaves_birch.png 70+120 ${PXSIZE} default_aspen_leaves.png
 			convert_alphatex $FOLIAG blocks/leaves_jungle.png 16+32 ${PXSIZE} default_jungleleaves.png
 			convert_alphatex $FOLIAG blocks/waterlily.png 16+32 ${PXSIZE} flowers_waterlily.png
+			convert_alphatex $FOLIAG blocks/waterlily.png 16+32 ${PXSIZE} flowers_waterlily_bottom.png
 			echo -e "." >> _n/_counter
 		fi
 
