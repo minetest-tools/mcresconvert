@@ -38,6 +38,27 @@ convert_alphatex() {
 	fi
 }
 
+copy_or_crop_from_anim() {
+	IN=$1
+	OUT=$2
+
+	crop="0"
+	if [ -f "$IN.mcmeta" ]; then
+		if grep -q "animation" "$IN.mcmeta"; then
+			# items are never animated in minetest
+			if echo $IN | grep -q "/items/"; then
+				crop="1"
+			fi
+		fi
+	fi
+
+	if [ "$crop" == "1" ]; then
+		convert "$IN" -crop ${PXSIZE}x${PXSIZE}+0+0 -depth 8 "$OUT"
+	else
+		cp "$IN" "$OUT"
+	fi
+}
+
 compose_door() {
 	l=$1
 	u=$2
@@ -343,10 +364,10 @@ RENAMES
 			echo -e "." >> _n/_tot
 			if [ -f "_n/$IN" ]; then
 				echo -e "." >> _n/_counter
-				cp "_n/$IN" "$OUT"
+				copy_or_crop_from_anim "_n/$IN" "$OUT"
 			elif [ -f "_z/$IN" ]; then
 				echo -e "." >> _n/_counter
-				cp "_z/$IN" "$OUT"
+				copy_or_crop_from_anim "_z/$IN" "$OUT"
 			# uncomment below 2 lines to see if any textures were not found.
 			else
 				echo "+$IN $OUT $FLAG: Not Found"
