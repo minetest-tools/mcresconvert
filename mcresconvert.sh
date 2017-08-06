@@ -304,10 +304,12 @@ blocks/rail_normal_turned.png default_rail_curved.png
 blocks/red_sand.png default_desert_sand.png
 blocks/red_sandstone_normal.png default_desert_stone.png
 blocks/red_sandstone_smooth.png default_desert_stone_brick.png
+blocks/red_sandstone_carved.png default_desert_stone_block.png
 blocks/reeds.png default_papyrus.png
 blocks/sand.png default_sand.png
 blocks/sandstone_top.png default_sandstone.png
 blocks/sandstone_normal.png default_sandstone_brick.png
+blocks/sandstone_carved.png default_sandstone_block.png
 blocks/sapling_birch.png default_aspen_sapling.png
 blocks/sapling_jungle.png default_junglesapling.png
 blocks/sapling_spruce.png default_pine_sapling.png
@@ -326,6 +328,7 @@ items/stone_shovel.png default_tool_stoneshovel.png
 items/stone_sword.png default_tool_stonesword.png
 blocks/stone.png default_stone.png
 blocks/stonebrick.png default_stone_brick.png
+blocks/stonebrick_carved.png default_stone_block.png
 items/sugar.png farming_flour.png
 blocks/tnt_bottom.png tnt_bottom.png
 blocks/tnt_side.png tnt_side.png
