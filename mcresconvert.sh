@@ -30,9 +30,20 @@ fi
 
 convert_alphatex() {
 	if [ -f _n/$2 ]; then
+		g="_n/$2"
+		if [ -f "$g.mcmeta" ]; then
+			if grep -q "animation" "$g.mcmeta"; then
+				# FIXME: need a list of not animated textures
+				if echo "$5" | grep -q "grass"; then
+					w=`file $g |sed 's/.*, \([0-9]*\) x \([0-9]*\).*/\1/'`
+					convert "$g" -crop ${w}x${w}+0+0 -depth 8 _n/_g.png
+					g="_n/_g.png"
+				fi
+			fi
+		fi
 		convert $1 -crop 1x1+$3 -depth 8 -resize ${4}x${4} _n/_c.png
-		composite -compose Multiply _n/_c.png _n/$2 _n/_i.png
-		composite -compose Dst_In _n/$2 _n/_i.png -alpha Set $5
+		composite -compose Multiply _n/_c.png $g _n/_i.png
+		composite -compose Dst_In $g _n/_i.png -alpha Set $5
 		echo -e "." >> _n/_tot
 		echo -e "." >> _n/_counter
 	fi
