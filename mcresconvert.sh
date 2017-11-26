@@ -321,6 +321,7 @@ blocks/sapling_oak.png default_sapling.png
 blocks/sapling_acacia.png default_acacia_sapling.png
 items/seeds_wheat.png farming_wheat_seed.png
 items/sign.png default_sign_wood.png
+items/sign.png default_sign_wall_wood.png
 items/snowball.png default_snowball.png
 blocks/snow.png default_snow.png
 items/stick.png default_stick.png
@@ -599,10 +600,11 @@ RENAMES
 		fi
 
 		# steel sign
-		echo -e "." >> _n/_tot
+		echo -e ".." >> _n/_tot
 		if [ -f _n/items/sign.png ]; then
 			convert _n/items/sign.png -channel RGBA -matte -colorspace gray default_sign_steel.png
-			echo -e "." >> _n/_counter
+			convert _n/items/sign.png -channel RGBA -matte -colorspace gray default_sign_wall_steel.png
+			echo -e ".." >> _n/_counter
 		fi
 
 		# emerald -> mese
