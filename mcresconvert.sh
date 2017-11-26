@@ -339,7 +339,7 @@ blocks/tnt_side.png tnt_side.png
 blocks/tnt_top.png tnt_top.png
 blocks/tnt_top.png tnt_top_burning.png
 blocks/tnt_top.png tnt_top_burning_animated.png
-blocks/torch_on.png default_torch.png
+blocks/torch_on.png default_torch_animated.png
 blocks/torch_on.png default_torch_on_floor_animated.png
 blocks/trapdoor.png doors_trapdoor.png
 blocks/trapdoor.png doors_trapdoor_side.png
