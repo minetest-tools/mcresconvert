@@ -60,6 +60,10 @@ copy_or_crop_from_anim() {
 			if echo $IN | grep -q "/items/"; then
 				crop="1"
 			fi
+			# in minetest blocks textures are called *_animated.png" if they are
+			if ! echo $OUT | grep -q "_animated.png"; then
+				crop="1"
+			fi
 		fi
 	fi
 
