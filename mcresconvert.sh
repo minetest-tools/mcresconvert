@@ -677,9 +677,9 @@ elif [ "$choice" == "other" ]; then
 	# assume file name to zip is passed
 	convert_file "`$ZENITY --file-selection --file-filter="*.zip" 2> /dev/null`"
 elif [ "$choice" == "default" ]; then
-	if ! cp ~/.minecraft/versions/1.9/1.9.jar /tmp/mc-default-1.9.zip ; then
+	if ! cp ~/.minecraft/versions/1.12.2/1.12.2.jar /tmp/mc-default-1.12.2.zip ; then
 		exit 1
 	fi
-	convert_file /tmp/mc-default-1.9.zip
-	rm /tmp/mc-default-1.9.zip
+	convert_file /tmp/mc-default-1.12.2.zip
+	rm /tmp/mc-default-1.12.2.zip
 fi
